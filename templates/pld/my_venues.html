@@ -1,0 +1,53 @@
+{% extends 'header/mainbase.html' %}
+
+{% block content %}
+<div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+  <div class="p-4">
+  <h2 style="font-weight: 800;">My Venuse</h2>
+  <hr>
+	<br/>
+
+	{% for venue in venue %}
+
+		<div class="card">
+ 
+  <div class="card-body">
+    <h5 class="card-title">{{ venue.Hall_name }}</h5>
+    <p class="card-text">
+    	<ul>
+<li>Venue Location: {{ venue.Hall_location}}</li>
+<li>Venue Specification: {{ venue.Hall_spesification }}</li>
+<li>Amount: {{ venue.Amount }}/-</li>
+
+
+	</ul>
+
+
+
+    </p>
+  </div>
+      <div class="card-footer text-muted">
+        
+        <a href="{% url 'updatevenue' venue.Hall_id %}" class="btn btn-outline-warning btn-sm">Update venue</a>
+
+        <a href="{% url 'delete_venue' venue.Hall_id  %}" class="btn btn-outline-danger btn-sm">Delete venue</a>
+        
+      </div>
+</div>
+
+
+
+
+
+
+	<br/><br/>
+
+
+		
+	{% endfor %}
+</div>
+</div>
+	
+
+
+{% endblock %}

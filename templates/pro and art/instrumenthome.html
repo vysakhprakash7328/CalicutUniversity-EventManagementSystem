@@ -1,0 +1,85 @@
+{% extends 'header/mainbase.html' %}
+
+  {% block content %}   
+    <div>
+
+        <h2>My Requests</h2>
+          <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Event ID</th>
+                  <th scope="col">Event Name</th>
+                  <th scope="col">Event Venue</th>
+                  <th scope="col">Event Start Date</th>
+                  <th scope="col">Event End Date</th>
+                  <th scope="col">Details</th>
+  
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in ev %}
+                 {% if i.Event_endDate > today %}
+                  
+                  
+                  
+  
+                
+  
+               
+                <tr>
+                  <th scope="row">{{i.Event_id}}</th>
+                  <td>{{i.Event_name}}</td>
+                  <td>{{i.Event_venue}}</td>
+                  <td>{{i.Event_startDate}}</td>
+                  <td>{{i.Event_endDate}}</td>
+                  <td><button class="btn btn-success"><a href="{% url 'singlevent' i.Event_id %}" style="text-decoration: none; color: white;">view</a> </button></td>
+                  
+                  
+                </tr>
+                {% endif %}
+                 {% endfor %}
+                 
+                 
+              </tbody>
+            </table>
+          </div>
+          <div>
+
+            <h2>My Instruments</h2>
+              <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Instrument Name</th>
+                      <th scope="col">Instrument amount</th>
+                      <th scope="col">Allow in public</th>
+                      <th scope="col">Update</th>
+      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in instr %}
+              
+                    
+      
+                   
+                    <tr>
+                      <th scope="row">{{i.instrument_name}}</th>
+                      <td>{{i.instrument_amount}}</td>
+                      {% if i.allow_in_public == 0 %}
+                      <td style="color:red ;">No</td>
+                      {% else %}
+                      <td style="color:rgb(27, 85, 27) ;">Yes</td>
+                      {% endif %}
+                      <td><button class="btn btn-success"><a href="{% url 'update_instrument_details' i.id %}" style="text-decoration: none; color: white;">Update</a> </button></td>
+                      
+                      
+                    </tr>
+               
+                     {% endfor %}
+                     
+                     
+                  </tbody>
+                </table>
+              </div>
+              <button><a href="{% url 'addinstruments' %}">Add Instruments</a></button>
+{% endblock %}

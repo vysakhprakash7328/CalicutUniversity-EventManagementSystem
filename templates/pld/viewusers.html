@@ -1,0 +1,209 @@
+{% extends 'header/mainbase.html' %}
+
+{% block content %}
+
+<container class="container">
+  {% if user.is_authenticated %}
+<br>
+
+<div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+  <div class="p-3">
+<h3 style="font-weight: 800;">Department Users</h3>
+<hr>
+<div style="overflow:auto;">
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Department Name</th>
+      <th scope="col">Head Name</th>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Details</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for i in depheads %}
+    <tr>
+      <th scope="row">{{i.department_name}}</th>
+      <th >{{i.head_name}}</th>
+
+      <td>{{i.head_username}}</td>
+      <td>{{i.head_mail}}</td>
+      <td><button class="btn btn-success"><a href="" style="text-decoration: none; color: white;">view</a> </button></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+<br>
+<div>
+  <h3 style="font-weight: 800;">Unions</h3>
+  <hr>
+  <div style="overflow:auto;">
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Union Name</th>
+        <th scope="col">Union email</th>
+        <th scope="col">president Name</th>
+        <th scope="col">president phone</th>
+        <th scope="col">secretary name</th>
+        <th scope="col">secretary phone</th>
+        <th scope="col">Union username</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in union %}
+      <tr>
+        <th scope="row">{{i.union_name}}</th>
+        <th >{{i.union_email}}</th>
+        <th >{{i.president_name}}</th>
+        <th >{{i.president_phone}}</th>
+        <th >{{i.secretary_name}}</th>
+        <th >{{i.secretary_phone}}</th>
+  
+        <td>{{i.union_username}}</td>
+ 
+        <td><button class="btn btn-success"><a href="" style="text-decoration: none; color: white;">view</a> </button></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
+  
+
+<br>
+
+
+<div>
+
+<h3 style="font-weight: 800;">Main Users</h3>
+<hr>
+<div style="overflow:auto;">
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col"> Name</th>
+      <th scope="col">Type</th>
+      <th scope="col">Details</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for i in mainusers %}
+    <tr>
+      <th scope="row">{{i.name}}</th>
+      <th >{{i.type}}</th>
+      <td><button class="btn btn-success"><a href="" style="text-decoration: none; color: white;">view</a> </button></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+<br>
+
+<button class="btn btn-success"><a href="{% url 'add_main_users' %}" style="text-decoration: none; color: white;">Add User</a> </button>
+
+
+
+</div>
+<br>
+
+
+
+<div>
+  <h3 style="font-weight: 800;">Event Category</h3>
+  <hr>
+  <div style="overflow:auto;">
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Category Id</th>
+        <th scope="col">Category </th>
+      
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in ctg %}
+     
+      <tr>
+    
+        <th scope="row">{{i.Category_id}}</th>
+        <th >{{i.Category_name}}</th>
+   
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+<br>
+<form action="" method="post">
+  {% csrf_token %}
+
+  {{ form.as_p }}
+  <input type="submit" value="Add category" class="btn btn-success">
+</form>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endif %}
+{% if headid %}
+<div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+  <div class="p-4">
+  <h2 style="font-weight: 800;">My Departments</h2>
+  <hr>
+  <div style="overflow:auto;">
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col"> Department Name</th>
+      <th scope="col">Department Email</th>
+      <th scope="col">Details</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for i in departmentusers %}
+    <tr>
+      <th scope="row">{{i.department_name}}</th>
+      <th >{{i.department_email}}</th>
+      <td><button class="btn btn-success"><a href="" style="text-decoration: none; color: white;">view</a> </button></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<br>
+<br>
+</div>
+<button class="btn btn-success"><a href="{% url 'add_department' headid %}" style="text-decoration: none; color: white;">Add Departments</a> 
+
+
+</button>
+ 
+  </div></div>
+
+
+{% endif %}
+
+
+</container>
+{% endblock %}

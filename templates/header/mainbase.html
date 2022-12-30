@@ -1,0 +1,420 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Cu Event Dashboard</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'guesthouse/image/Uni_of_cali.png' %}" rel="icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'Dashboard/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'Dashboard/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'Dashboard/assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'Dashboard/assets/vendor/quill/quill.snow.css' %}" rel="stylesheet">
+  <link href="{% static 'Dashboard/assets/vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+  <link href="{% static 'Dashboard/assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'Dashboard/assets/vendor/simple-datatables/style.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'Dashboard/assets/css/style.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.4.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  <style>
+body{
+margin-top:20px;
+color: #8e9194;
+background-color: #f4f6f9;
+}
+  </style>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="" class="logo d-flex align-items-center">
+        <img src="{% static 'guesthouse/image/Uni_of_cali.png' %}" alt="">
+        <span class="d-none d-lg-block" style="color: blue;">Calicut University</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+       
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">8</span>
+          </a><!-- End Notification Icon -->
+     {% include 'header/notification.html' %}
+          </li><!-- End Notification Nav -->
+
+        <li class="nav-item dropdown">
+
+         
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="dropdown-footer">
+              <a href="#">Show all messages</a>
+            </li>
+
+          </ul><!-- End Messages Dropdown Items -->
+
+        </li><!-- End Messages Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="{% static 'Dashboard/assets/img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{user}}</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>{{user}}</h6>
+              <span></span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="{% url 'view_single_user' %}">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="{% url 'account_settings' %}">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="{% url 'logout' %}">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+      {% if user.is_authenticated or mainuserid or proid or publicid%}
+
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'home' %}">
+          <i class="bi bi-grid"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      {% elif headid or depid or unionid %}
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'Department' %}">
+          <i class="bi bi-grid"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      {% elif proid %}
+
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'pro_home' %}">
+          <i class="bi bi-grid"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      {% elif guestid %}
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'guest_home' %}">
+          <i class="bi bi-grid"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      {% endif %}
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Events</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{% url 'all_event'  %}">
+              <i class="bi bi-circle"></i><span>All Events</span>
+            </a>
+          </li>
+          {% if user.is_authenticated or depid or unionid or publicid %}
+
+          <li>
+            <a href="{% url 'create_event' %}">
+              <i class="bi bi-circle"></i><span>Add Event</span>
+            </a>
+          </li>
+          {% if user.is_authenticated %}
+
+
+          <li >
+            <a href="{% url 'priority_event' %}"  ><i class="bi bi-circle"></i
+              ><span >Add Priority Event</span></a>
+          </li>
+        {% endif %}
+          <li>
+            <a href="{% url 'my_events' %}">
+              <i class="bi bi-circle"></i><span>My Events</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'track_event'%}">
+              <i class="bi bi-circle"></i><span>Track Event</span>
+            </a>
+          </li>
+          {% elif headid %}
+         
+          <li >
+            <a href="{% url 'my_events' %}"  ><i class="bi bi-circle"></i
+              ><span >My Events</span></a>
+          </li>
+          <li >
+            <a href="{% url 'priority_event' %}"  ><i class="bi bi-circle"></i
+              ><span >Add Priority Event</span></a>
+          </li>
+     
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>Approved Events</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'track_event'%}">
+              <i class="bi bi-circle"></i><span>Track Events</span>
+            </a>
+          </li>
+          {% endif %}
+                  </ul>
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>Venues</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{% url 'view_venue' %}">
+              <i class="bi bi-circle"></i><span>All Venue</span>
+            </a>
+          </li>
+          {% if user.is_authenticated or headid  %}
+
+          <li>
+            <a href="{% url 'add_venue' %}">
+              <i class="bi bi-circle"></i><span>Add Venue</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'my_venues' %}">
+              <i class="bi bi-circle"></i><span>My Venue</span>
+            </a>
+          </li>
+          {% endif %}
+          
+
+
+
+
+          
+          
+        </ul>
+      </li><!-- End Forms Nav -->
+
+
+{% if user.is_authenticated or headid or depid or mainuserid or proid or unionid or guestid or publicid%}
+            {% if user.is_superuser %}
+          
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'view_users' %}">
+          <i class="bi bi-grid"></i>
+          <span>Users</span>
+        </a>
+      </li>
+          
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="{% url 'pdf_report' %}">
+          <i class="bi bi-grid"></i>
+          <span>Generate Report</span>
+        </a>
+      </li>
+          
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="{% url 'log_records' %}">
+          <i class="bi bi-grid"></i>
+          <span>Log records</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="{% url 'guest_home' %}">
+          <i class="bi bi-grid"></i>
+          <span>GuestHouse Booking</span>
+        </a>
+      </li>
+      {% endif %}
+      {% if headid %}
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'view_users' %}">
+          <i class="bi bi-grid"></i>
+          <span>My Departments</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="{% url 'pdf_report_dep' %}">
+          <i class="bi bi-grid"></i>
+          <span>Generate Report</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="{% url 'guest_home' %}">
+          <i class="bi bi-grid"></i>
+          <span>GuestHouse Booking</span>
+        </a>
+      </li>
+      {% else %}
+      
+      {% endif %}
+      {% endif %}
+
+      
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+  <main id="main" class="main " >
+
+  
+  {% block content %}
+
+
+  {% endblock %}
+  
+
+  </main>
+
+
+ 
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'Dashboard/assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
+  <script src="{% static 'Dashboard/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'Dashboard/assets/vendor/chart.js/chart.min.js' %}"></script>
+  <script src="{% static 'Dashboard/assets/vendor/echarts/echarts.min.js' %}"></script>
+  <script src="{% static 'Dashboard/assets/vendor/quill/quill.min.js' %}"></script>
+  <script src="{% static 'Dashboard/assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
+  <script src="{% static 'Dashboard/assets/vendor/tinymce/tinymce.min.js' %}"></script>
+  <script src="{% static 'Dashboard/assets/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'Dashboard/assets/js/main.js' %}"></script>
+
+</body>
+
+</html>

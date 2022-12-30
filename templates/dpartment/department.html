@@ -1,0 +1,156 @@
+
+  {% extends 'header/mainbase.html' %}
+
+  {% block content %}    
+  
+  {% if headid %}     
+  
+  <div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+    
+    
+    <div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+      <div class="p-4">
+      <h2 style="font-weight: 800;">Event Requests</h2>
+      <hr>
+      {% if event %}
+      <div style="overflow:auto;">
+
+      <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Event ID</th>
+              <th scope="col">Event Name</th>
+              <th scope="col">Event Venue</th>
+              <th scope="col">Details</th>
+             
+            </tr>
+          </thead>
+          <tbody>
+              {% for e in ev %}
+              {% for i in event %}
+              {% if i.Event_id == e.event_id %}
+            <tr>
+              <th scope="row">{{i.Event_id}}</th>
+              <td>{{i.Event_name}}</td>
+              <td>{{i.Event_venue}}</td>
+              <td><button class="btn btn-success"><a href="{% url 'singlevent' i.Event_id %}" style="text-decoration: none; color: white;">view</a> </button></td>
+              {% if i.Resubmission == 1 %}
+                <td><h6>The Event Manager is requested for resubmiting this event</h6></td>
+                <td><button class="btn btn-success"><a href="{% url 'reqresubmission' i.Event_id %}" style="text-decoration: none; color: white;">Grant Permission</a> </button></td>
+
+                {% else %}
+                
+           
+              {% endif %}
+              
+            </tr>
+            <script>
+              function alertsweet(){
+                Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to cancel this event!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'No',
+            confirmButtonText: 'Yes, Cancell it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+            Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success',
+            
+            )
+            Swal.fire({
+            title: 'Reason for cancellation',
+            html: `<form method = 'post' action='{% url 'cancelevent' i.Event_id %}'>{% csrf_token %}<input type="text" name="reason" class="swal2-input" placeholder="Reason for cancellation"><input type = "submit" class="SwalBtn1 customSwalBtn" value="Submit"></form>`,
+            showConfirmButton: false,
+            focusConfirm: false,
+          
+          
+            
+          }).then((result) => {
+            Swal.fire({
+           
+            icon: 'success',
+            title: 'Event Cancelled successfully',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          })	}
+            })
+          
+              }
+              </script>
+            
+ 
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+          </tbody>
+        </table>
+        </div>
+      </div>
+  
+      {% else %}
+<br>
+      <h3>You have no Event Requests...</h3>
+    </div>
+  </div>
+    {% endif %}
+
+    {% elif depid %}
+    <div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+      <div class="p-4">
+        <h2 style="font-weight: 800;">Halls avaialable for you</h2>
+    <hr>
+    <div style="overflow:auto;">
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Hall Name</th>
+                    <th scope="col">Hall Location</th>
+                    <th scope="col">Hall Capacity</th>
+                    <th scope="col">Owner</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Availability</th>
+    
+                
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for i in hall %}
+                  <tr>
+                    <th scope="row">{{i.Hall_name}}</th>
+                    <td>{{i.Hall_location}}</td>
+                    <td>{{i.Hall_capacity}}</td>
+                    <td>{{i.Hall_manager}}</td>
+                    <td>{{i.Amount}}</td>
+                    <td>{% if i.Hall_availability == 1 %}
+                      <h5 style="color: green;">Available</h5>
+                      {% else %}
+                      <h5 style="color: red;">Not available</h5>
+                      {% endif %}
+                    </td>
+                    <td><button class="btn btn-success"><a href="{% url 'singlevenue' i.Hall_id %}" style="text-decoration: none; color: white;">view</a> </button></td>
+                    
+                 
+    
+                    
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+      </div></div>
+    </div>
+    {% endif %}
+          <br>
+          <br>
+
+           
+        
+       
+      {% endblock %}

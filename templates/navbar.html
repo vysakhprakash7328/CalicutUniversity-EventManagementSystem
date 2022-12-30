@@ -1,0 +1,180 @@
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #d3e2ec;">
+    <div class="container-fluid">
+
+        {% if user.is_authenticated or mainuserid or proid or unionid or publicid%}
+      <a class="navbar-brand" href="{% url 'home' %}">{{user}} </a>
+      {% elif headid or depid or unionid %}
+      <a class="navbar-brand" href="{% url 'Department' %}">{{user}} </a>
+
+      {% elif proid %}
+
+      <a class="navbar-brand" href="{% url 'pro_home' %}">{{user}} </a>
+      
+      {% elif guestid %}
+
+      <a class="navbar-brand" href="{% url 'guest_home' %}">{{user}} </a>
+      
+ 
+
+
+      {% endif %}
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          
+  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Events
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'all_event'  %}">All Events</a></li>
+              {% if user.is_authenticated or depid or unionid or publicid %}
+
+              <li><a class="dropdown-item" href="{% url 'create_event' %}">Add Event</a></li>
+              <li><a class="dropdown-item" href="{% url 'my_events' %}">My Events</a></li>
+              <li>
+                <a class="dropdown-item" href="{% url 'track_event'%}">Track Events</a>
+              </li>
+
+              {% elif headid %}
+
+              <li><a class="dropdown-item" href="">My Event Requests</a></li>
+              <li>
+                <a class="dropdown-item" href="{% url 'track_event'%}">Track Events</a>
+              </li>
+              
+
+
+              {% endif %}
+              <li><a class="dropdown-item" href="">Search Events</a></li>
+  
+              
+            </ul>
+
+
+          </li>
+  
+  
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Venues
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'view_venue' %}">All Venues</a></li>
+              {% if user.is_authenticated or headid  %}
+              <li><a class="dropdown-item" href="{% url 'add_venue'  %}">Add Venue</a></li>
+              <li><a class="dropdown-item" href="{% url 'my_venues' %}">My Venues</a></li>
+              {% endif %}
+            
+            </ul>
+
+
+
+
+
+          </li>   
+
+
+
+
+
+          {% if user.is_authenticated or headid or depid or mainuserid or proid or unionid or guestid or publicid%}
+            {% if user.is_superuser %}
+          
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'view_users' %}">Users</a>
+            </li>
+          
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'pdf_report' %}">Generate Report</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">Guest House Booking</a>
+            </li>
+        
+            {% elif headid %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'view_users'%}">My Departments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">Guest House Booking</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'pdf_report' %}">Generate Report</a>
+            </li>
+           
+            {% elif unionid or depid%}
+            <li class="nav-item">
+              <a class="nav-link" href="">Guest House Booking</a>
+            </li>
+            
+       
+            
+            {% endif %}
+
+            <!-- <li class="nav-item">
+            <a class="nav-link" href="">Admin</a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout'%}">Logout</a>
+          </li>
+          {% else %}
+          
+         
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Requests
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'dep_request' %}">Request for Department Head</a></li>
+       
+              <li><a class="dropdown-item" href="{% url 'union_request' %}">Request for unions</a></li>
+              
+             
+            
+            </ul>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login'%}">Login</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'public_login'%}">Public Login</a>
+            </li>
+
+          </li>   
+
+
+          {% endif %}
+
+  
+        </ul>
+
+     
+        <form class="d-flex" method=POST action="">
+          {% csrf_token %}
+  
+          <input class="form-control me-2" type="search" placeholder="Search Venues" aria-label="Search" name="searched">
+          <button class="btn btn-secondary" type="submit">Search</button>
+        </form>
+        {% if user.is_authenticated or headid or depid or mainuserid or proid or unionid or guestid or publicid %}
+        <ul class="navbar-nav  mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'view_single_user' %}"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+          </svg></a>
+        </li>
+        </ul>
+        {% endif %}
+    
+    
+       
+
+        
+      </div>
+    </div>
+  </nav>

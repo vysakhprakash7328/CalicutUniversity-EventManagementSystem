@@ -1,0 +1,82 @@
+{% extends 'guesthouse/guestHouseBase.html' %}
+{% load static %}
+{% block content %} 
+
+   <!--================Breadcrumb Area =================-->
+   <section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <ol class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li class="active">My bookings</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<!--================Breadcrumb Area =================-->
+<!--================ Accomodation Area  =================-->
+<section class="accomodation_area section_gap">
+  <div class="container">
+      <div class="section_title text-center">
+          <h2 class="title_color">Bookings</h2>
+      </div>
+
+ <div class="container">
+    <div class="table-responsive">
+        <table class="table">
+          <tr>
+            <th>Name</th>
+            <th>Room Type</th>
+            <th>number of room</th>
+            <th>Check In</th>
+            <th>Check Out</th>
+            <th>Status</th>
+            <th>Edit</th>
+        
+          </tr>
+          {% for i in data %}
+          <tr>
+
+            
+            <td>{{i.name}}</td>
+            <td>{{i.room_type}}</td>
+
+            <td>{{i.number_of_rooms}}</td>
+
+            <td>{{i.check_in}}</td>
+
+            <td>{{i.check_out}}</td>
+            <td>
+                {% if i.status == 0 %}
+                <a style="color: yellow;">Pending</a>
+                {% elif i.status == 3 %}
+                <a style="color: rgb(255, 53, 46);">cancelled</a>
+
+                {% else %}
+                <a style="color: green;">Approved</a>
+
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'editbooking' i.booking_id %}"><button class="btn btn-primary" >Edit</button></a>
+                <a href="{% url 'deletebooking' i.booking_id %}"><button class="btn btn-danger">Delete</button></a>
+
+            </td>
+          
+
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+ </div>
+ 
+  </div>
+</section>
+<!--================ Accomodation Area  =================-->
+
+
+
+
+
+{% endblock %}

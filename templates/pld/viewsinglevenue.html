@@ -1,0 +1,87 @@
+
+
+
+
+{% extends 'header/mainbase.html' %}
+
+{% block content %}
+<style>
+li{
+  margin-bottom: 3px;
+}
+
+</style>
+<div class="card">
+  <div class="p-4">
+  <div class="card-header">
+   <h2> {{ venue.Hall_name }}</h2>
+  </div>
+
+
+<div class="row g-0">
+
+
+
+
+
+  <div class="card-body col-md-6">
+<br>
+<br>
+<br>
+    	<ul style="list-style: none; ">
+
+	<li><span style="font-weight: 700;">HALL LOCATION :</span> {{venue.Hall_location}} </li>
+	<li><span style="font-weight: 700;">HALL CAPACITY :</span> {{venue.Hall_capacity}}</li>
+	<li><span style="font-weight: 700;">HALL SPECIFICATION :</span> {{venue.Hall_spesification}}</li>
+	
+	
+	<li><span style="font-weight: 700;">HALL OWNER:</span> {{ venue.Hall_manager }} </li>
+	<li><h2 style="color: blue;"> {{ venue.Amount }}/-</h2></li>
+  
+  {% if venue.Due_date %}
+
+  {% if today < venue.Due_date  %}
+  
+  <li style="color: red;"><span style="font-weight: 700;">From  {{venue.Due_date}} Hall Amount is {{venue.NewAmount}}</span></li>
+
+  {% endif %}
+
+
+  {% endif %}
+
+	</ul>
+	<br>
+
+
+
+    </p>
+    <br/>
+    
+     
+
+  <br/><br/>
+</div>
+
+<div class="col-md-6">
+
+
+<br>
+<center>
+
+             <div class="col-sm-12" ><img  src="{{ venue.Hall_images.url }}" class="img-fluid"  alt="" style="width: 80%;"></div>
+            </center>
+
+	
+
+</div>
+
+
+
+
+</div>
+</div>
+</div>
+<br/>
+	
+
+{% endblock %}

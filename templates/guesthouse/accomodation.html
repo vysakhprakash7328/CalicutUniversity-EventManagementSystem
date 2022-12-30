@@ -1,0 +1,79 @@
+{% extends 'guesthouse/guestHouseBase.html' %}
+{% load static %}
+{% block content %} 
+
+   <!--================Breadcrumb Area =================-->
+   <section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">Accomodation</h2>
+            <ol class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li class="active">Accomodation</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<!--================Breadcrumb Area =================-->
+<!--================ Accomodation Area  =================-->
+<section class="accomodation_area section_gap">
+  <div class="container">
+      <div class="section_title text-center">
+          <h2 class="title_color">Accomodation</h2>
+          <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast, </p>
+      </div>
+
+ 
+      {% for i in rooms %}
+   
+      <div class="card mb-3 rounded-start" >
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="{{ i.room_img.url }}" class="img-fluid rounded-start"  alt="">
+            </div>
+            <div class="col-md-4">
+              <div class="card-body">
+                <h3 class="card-title">{{i.room_type}}</h3>
+                <p class="card-text">{{i.room_desc}}</p>
+                <p class="card-text">Availabale rooms :{{i.room_available}}</p>
+              
+              </div>
+            </div>
+
+
+            <div class="col-md-4">
+              <div class="card-body">
+              
+                <h2>${{i.room_rent}}<small>/night</small></h2>
+              
+                <br>                
+                <button class="btn theme_btn button_hover" ><a href="{%url 'update_rooms' i.room_id %}">Update</a></button>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+       {% endfor %}
+       {% if mainuserid %}
+       <div class="col-md-12 text-right">
+        <button type="submit" value="submit" class="btn theme_btn button_hover"><a href="{% url 'addrooms' %}" style="color: white;">Add Rooms</a> </button>
+    </div>
+    {% endif %}
+           
+     
+     
+
+
+
+
+  </div>
+</section>
+<!--================ Accomodation Area  =================-->
+
+
+
+
+
+{% endblock %}

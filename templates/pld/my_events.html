@@ -1,0 +1,194 @@
+{% extends 'header/mainbase.html' %}
+
+{% block content %}
+<div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+  <div class="p-4">
+  <h2 style="font-weight: 800;">My Events</h2>
+  <hr>
+
+  {% if events %}
+
+	{% for event in events %}
+
+		<div class="card shadow p-3 mb-3 bg-white rounded">
+  <div class="card-header">
+    {{ event.Event_name }}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Venue: {{ event.Event_venue }}</h5>
+    <p class="card-text">
+    	<ul>
+<li>Start Date: {{ event.Event_startDate }}</li>
+<li>End Date: {{ event.Event_endDate }}</li>
+<li> 
+
+  {% if event.Event_status == 0 %}
+  <h6 style="color: rgb(186, 186, 39);">Pending for varification</h6>
+  {% elif event.Event_status == 3 %}
+  <h6 style="color: rgb(186, 186, 39);">cancelled due to high priority event</h6>
+
+  {% elif event.Event_status == 1 %}
+  <h6 style="color: rgb(205, 107, 21);">Payment Pending</h6>
+  <button class="btn btn-primary">{{event.Event_amount}} /-</button>
+
+  <a href="{% url 'GeneratePdf' event.Event_id %}">Circular</a>
+
+  {% elif event.Event_status == 2 %}
+  {% for t in tracks %}
+  {% if t.event_id == event.Event_id %}
+
+  <h6 style="color: Red;">Cancelled Reason: {{t.remarks}}</h6>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+</li>
+{% if event.Art_and_Photography == 1  %}
+<li>
+  
+  {% if event.art_permission == 1 %}
+
+  <h6>Art & Photography approved your request</h6>
+  {% elif event.art_permission == 0 %}
+
+  <h6>Your request for Art & Photography is not approved</h6>
+  {% endif %}
+
+</li>
+{% endif %}
+
+
+
+
+
+
+
+
+</ul>
+    
+  </div>
+
+      <div class="card-footer text-muted">
+        
+
+      <div>
+        
+        {% for te in trackevents %}
+        {% if te.event_id == event.Event_id %}
+        
+        {% if headid %}
+        {% if event.Event_manager == head_name and event.Event_status == 1 %}
+        <a href="{% url 'edit_event' event.Event_id %}" class="btn btn-outline-secondary btn-sm">Update Event</a>
+        {% endif %}
+        {% endif %}
+
+
+
+        {% if depid %}
+        {% if te.approved_by == event.Event_manager and te.status == 0  and event.Event_status == 0 and event.Resubmission == 0 %}
+        <a href="{% url 'edit_event' event.Event_id %}" class="btn btn-outline-secondary btn-sm">Update Event</a>
+
+        {% elif te.approved_by == event.Event_manager and te.status == 1 and event.Event_status == 0 and event.Resubmission == 0 %}
+
+        <a href="{% url 'reqresubmission' event.Event_id %}" class="btn btn-outline-secondary btn-sm">Request for Resubmission</a>
+        {% elif te.approved_by == event.Event_manager and te.status == 1 and event.Event_status == 0 and event.Resubmission == 1 %}
+
+        <h5>You are requested for resubmitting this event...</h5>
+
+        {% elif te.approved_by == event.Event_manager and te.status == 1 and event.Event_status == 1 and event.Resubmission == 0   %}
+        
+        <a href="{% url 'edit_event' event.Event_id %}" class="btn btn-outline-warning btn-sm">Resubmit</a>
+        {% elif te.approved_by == event.Event_manager and te.status == 1 and event.Event_status == 2 and event.Resubmission == 0   %}
+        <h6>Your Event request is cancelled...</h6>
+
+        <a href="{% url 'edit_event' event.Event_id %}" class="btn btn-outline-warning btn-sm">Resubmit</a>
+        {% elif te.approved_by == event.Event_manager and te.status == 2 and event.Event_status == 2 and event.Resubmission == 0   %}
+        <h6>Your Event request is cancelled...</h6>
+
+        <a href="{% url 'edit_event' event.Event_id %}" class="btn btn-outline-warning btn-sm">Resubmit</a>
+        {% elif te.approved_by == event.Event_manager and event.Resubmission == 2  %}
+        <h6>Your request for resubmitting event details is Approved...</h6>
+
+        <a href="{% url 'edit_event' event.Event_id %}" class="btn btn-outline-warning btn-sm">Resubmit</a>
+        {% endif %}
+        {% endif %}
+
+
+
+
+    
+
+      
+
+
+        {% if unionid or publicid or user.is_superuser %}
+
+       
+       
+        
+
+        {% if te.approved_by == 'PLD' and te.status == 0  and event.Event_status == 0 and event.Resubmission == 0 %}
+        <a href="{% url 'edit_event' event.Event_id %}" class="btn btn-outline-warning btn-sm">Update Event</a>
+
+        {% elif te.approved_by == 'PLD' and te.status == 1 and event.Event_status == 0 and event.Resubmission == 0 %}
+
+        <a href="{% url 'reqresubmission' event.Event_id %}" class="btn btn-outline-secondary btn-sm">Request for Resubmission</a>
+        {% elif te.approved_by == 'PLD' and te.status == 1 and event.Event_status == 0 and event.Resubmission == 1 %}
+
+        <h5>You are requested for resubmitting this event...</h5>
+
+        {% elif te.approved_by == 'PLD' and te.status == 1 and event.Event_status == 1 and event.Resubmission == 0   %}
+        
+        <a href="{% url 'edit_event' event.Event_id %}" class="btn btn-outline-warning btn-sm">Resubmit</a>
+        {% elif te.approved_by == 'PLD' and te.status == 1 and event.Event_status == 2 and event.Resubmission == 0   %}
+        <h6>Your Event request is cancelled...</h6>
+
+        <a href="{% url 'edit_event' event.Event_id %}" class="btn btn-outline-warning btn-sm">Resubmit</a>
+        {% elif te.approved_by == 'PLD' and te.status == 2 and event.Event_status == 2 and event.Resubmission == 0   %}
+        <h6>Your Event request is cancelled...</h6>
+
+        <a href="{% url 'edit_event' event.Event_id %}" class="btn btn-outline-warning btn-sm">Resubmit</a>
+        {% elif te.approved_by == 'PLD' and event.Resubmission == 2  %}
+        <h6>Your request for resubmitting event details is Approved...</h6>
+
+        <a href="{% url 'edit_event' event.Event_id %}" class="btn btn-outline-warning btn-sm">Resubmit</a>
+        {% endif %}
+        {% endif %}
+
+
+
+   
+        {% endif %}
+        {% endfor %}
+
+    {% if event.Event_status == 3 %}
+    <a href="{% url 'edit_event' event.Event_id %}" class="btn btn-outline-warning btn-sm">Resubmit</a>
+    
+    {% endif %}
+        
+        <a href="{% url 'singlevent' event.Event_id %}" class="btn btn-outline-success btn-sm">View Event</a>
+        
+      </div>
+    </div>
+   
+</div>
+
+
+
+
+
+	<br/><br/>
+
+
+		
+	{% endfor %}
+
+
+  {% else %}
+  <h3>You have no events to display....</h3>
+
+  {% endif %}
+
+  </div></div>
+
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'header/mainbase.html' %}
+
+  {% block content %}   
+    <div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+      {% if ev %}
+        <h2>My Requests</h2>
+        <div style="overflow:auto;">
+
+          <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Event ID</th>
+                  <th scope="col">Event Name</th>
+                  <th scope="col">Event Venue</th>
+                  <th scope="col">Event Start Date</th>
+                  <th scope="col">Event End Date</th>
+                  <th scope="col">Details</th>
+  
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in ev %}
+                 {% if i.Event_startDate > today %}
+                  
+                  
+                  
+  
+                
+  
+               
+                <tr>
+                  <th scope="row">{{i.Event_id}}</th>
+                  <td>{{i.Event_name}}</td>
+                  <td>{{i.Event_venue}}</td>
+                  <td>{{i.Event_startDate}}</td>
+                  <td>{{i.Event_endDate}}</td>
+                  <td><button class="btn btn-success"><a href="{% url 'singlevent' i.Event_id %}" style="text-decoration: none; color: white;">view</a> </button></td>
+                  
+                  
+                </tr>
+                {% endif %}
+                 {% endfor %}
+                 
+                 
+              </tbody>
+            </table>
+            {% else %}
+        
+
+          <h3>You have no Approved Events</h3>
+
+          {% endif %}
+          </div>
+          
+          </div>
+          <div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+            {% if ev %}
+            <h2>Attended Events</h2>
+            
+            <div style="overflow:auto;">
+
+              <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Event Name</th>
+                      <th scope="col">Event Start Date</th>
+                      <th scope="col">Event End Date</th>
+                      <th scope="col">Event Location</th>
+                      <th scope="col">Add Photos</th>
+      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for j in ev %}
+                 {% if i.Event_startDate < today %}
+
+                    
+      
+                   
+                    <tr>
+                      <th scope="row">{{j.Event_name}}</th>
+                      <td>{{j.Event_startDate}}</td>
+                      <td>{{j.Event_endDate}}</td>
+                      <td>{{j.Event_venue}}</td>
+                      <td><button class="btn btn-success"><a href="{% url 'singlevent' i.Event_id %}" style="text-decoration: none; color: white;">view</a> </button></td>
+                      <td><button class="btn btn-success"><a href="" style="text-decoration: none; color: white;">Share</a> </button></td>
+
+                      
+                  
+                      
+                      
+                      
+                    </tr>
+                    {% endif %}
+                     {% endfor %}
+                     
+                     
+                  </tbody>
+                </table>
+              </div>
+              {% else %}
+              <h3>You have no Attended Events</h3>
+              {% endif %}
+              </div>
+{% endblock %}

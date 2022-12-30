@@ -1,0 +1,22 @@
+{% extends 'header/mainbase.html' %}
+
+{% block content %} 
+<div class="container-fluid shadow p-3 mb-5 bg-white rounded mt-5 col-md-8">
+    <div class="p-4">
+    <h2 style="font-weight: 800;">Create Department</h2>
+    <br>
+<form action="" method=POST>
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+
+
+
+    
+<br/>
+    <input type="submit" value="Create" class="btn btn-secondary">
+
+</form>
+
+{% endblock %}

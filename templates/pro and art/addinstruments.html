@@ -1,0 +1,21 @@
+{% extends 'header/mainbase.html' %}
+
+{% block content %}
+      <div>
+          <h2>Add venue to database</h2>
+      </div>
+      <br>
+
+      <form action="" method="POST">
+
+        {% csrf_token%}
+        {{ form.as_p }}
+
+        <input type="submit" value="submit" class="btn btn-success">
+        <button class="btn btn-success" type=""><a href="" style="text-decoration: none; color: white;">Back</a></button>
+
+      </form>
+
+      </div>
+    
+{% endblock %}

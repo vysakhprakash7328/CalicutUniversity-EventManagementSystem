@@ -1,0 +1,82 @@
+{% extends 'header/mainbase.html' %}
+
+  {% block content %}    
+  <style>
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+    
+    th, td {
+      text-align: center;
+      padding: 8px;
+    }
+    
+    </style>
+ 
+  <div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+    <div class="p-4">
+    <h2 style="font-weight: 800;">Track Events</h2>
+    <hr>
+    {% if event %}
+
+    <div style="overflow:auto;">
+      <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Event ID</th>
+              <th scope="col">Event Name</th>
+              <th scope="col">Event Venue</th>
+              <th scope="col">Details</th>
+        
+            </tr>
+          </thead>
+          <tbody>
+              {% for i in event %}
+            <tr>
+              <th scope="row">{{i.Event_id}}</th>
+              <td>{{i.Event_name}}</td>
+              <td>{{i.Event_venue}}</td>
+              <td><button class="btn btn-success"><a href="{% url 'singlevent' i.Event_id %}" style="text-decoration: none; color: white;">view</a> </button></td>
+              {% for j in track %}
+                    
+                    {% if j.event_id == i.Event_id %}
+                    <th>{{j.approved_by}}</th>
+                    {% if j.status == 0 %}
+                    <td style="color: rgb(124, 12, 12);">Pending...</td>
+                    {% elif j.status == 1 and j.remarks == "Approved" %}
+                    <td style="color: rgb(13, 196, 13);">Approved...</td>
+                    {% elif j.status == 2 %}
+                    <td style="color: red">Cancelled...</td>
+                    {% else %}
+                    <td style="color: rgb(198, 196, 86);">File moving</td>
+
+
+                    {% endif %}
+                    <td>{{j.approved_on}}</td>
+
+
+
+                    {% endif %}
+
+
+              {% endfor %}
+
+              
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+      </div>
+      {% else %}
+
+      <h3>You have no events to track...</h3>
+
+
+    {% endif %}
+
+      {% endblock %}

@@ -1,0 +1,94 @@
+<div class="modal-content ">  
+  <div class="container-fluid mb-5 bg-white rounded p-5" id="logindiv">
+  <form method="post" action="{% url 'public_login' %}">
+      {% csrf_token %}
+      <h2>PUBLIC LOGIN</h2>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="username">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+      </div>
+      <div>
+          <a style="color: blue;"  id="click">forgot password?</a>
+      </div>
+      <br>
+      
+      <input type="submit" class="btn btn-primary" id="publicloginbtn">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+
+    </form>
+
+
+
+  </div>
+    <div  class="container-fluid mb-5 bg-white rounded p-5" id="forgotdiv" style="display: none;">
+<form method="post" action="{% url 'forgot_password' %}">
+  {% csrf_token %}
+
+  <div class="form-group">
+      <h2>forgot password?</h2>
+
+      <label for="exampleInputPassword1">Enter your email</label>
+      <input type="email" class="form-control" id="exampleInputPassword1" placeholder="email" name="email">
+      <div style="display: none;" id="otpdiv">
+          <label for="otp">Enter otp</label>
+          <input type="text" class="form-control" id="otp" placeholder="enter otp" name="otpbtn">
+      </div>
+      <br>
+    </div>
+
+<input type="submit" class="btn btn-success" id="otpbtn" name="otpbtn" >
+</form>
+<a id="loginback" style="color: blue;" >   login?</a>
+
+
+    </div>
+   
+</div>
+<script type="text/javascript">
+  const logindiv = document.getElementById("logindiv");
+  const forgotdiv = document.getElementById("forgotdiv");
+  const otpdiv = document.getElementById("otpdiv");
+  const btn = document.getElementById("click");
+  const btn1 = document.getElementById("loginback");
+  const btn3 = document.getElementById("otpbtn");
+  btn.onclick = function () {
+  if (forgotdiv.style.display == "none") {
+      forgotdiv.style.display = "block";
+      logindiv.style.display = "none";
+
+  } else {
+      forgotdiv.style.display = "none";
+  }
+  };
+
+
+  btn1.onclick = function () {
+  if (logindiv.style.display == "none") {
+      logindiv.style.display = "block";
+      forgotdiv.style.display = "none";
+      otpdiv.style.display = "none";
+
+
+  } else {
+      logindiv.style.display = "none";
+  }
+  };
+
+
+  btn3.onclick = function () {
+  if (otpdiv.style.display == "none") {
+      forgotdiv.style.display = "block";
+
+      otpdiv.style.display = "block";
+
+
+  }
+  };
+
+
+  </script>

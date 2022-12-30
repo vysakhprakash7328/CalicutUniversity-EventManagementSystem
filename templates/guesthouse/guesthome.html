@@ -1,0 +1,201 @@
+{% extends 'guesthouse/guestHouseBase.html' %}
+{% load static %}
+{% block content %} 
+
+
+
+
+
+ <!--================Banner Area =================-->
+ <section class="banner_area">
+    <div class="booking_table d_flex align-items-center">
+        <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>Calicut University Guest House Booking</h2>
+                <br>
+                <a href="{% url 'bookings' %}" class="btn theme_btn button_hover"> Book Room</a>
+            </div>
+        </div>
+    </div>
+    <div class="hotel_booking_area position">
+        <div class="container">
+            <div class="hotel_booking_table">
+                <div class="col-md-3">
+                    <h2>Check<br> Availability</h2>
+                </div>
+                <div class="col-md-9">
+                    <div class="boking_table">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="book_tabel_item">
+                                    <div class="form-group">
+                                        <div class='input-group date' id='datetimepicker11'>
+                                            <input type='text' class="form-control" placeholder="Check In"/>
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='datetimepicker1'>
+                                            <input type='text' class="form-control" placeholder="Check Out"/>
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="book_tabel_item">
+                                    <div class="input-group">
+                                        <select class="wide">
+                                            <option data-display="Type of room">Type</option>
+                                            <option value="1">Non AC</option>
+                                            <option value="2">AC</option>
+                                            <option value="3">VIP</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class='input-group date'>
+                                            <input type='text' class="form-control" placeholder="Nomber of persons"/>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="book_tabel_item">
+                                 
+                                    <a class="book_now_btn button_hover" href="#"> Search</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================Banner Area =================-->
+
+<!--================ Accomodation Area  =================-->
+<section class="accomodation_area section_gap">
+    <div class="container">
+        <div class="section_title text-center">
+            <h2 class="title_color">Accomodation</h2>
+            <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast, </p>
+        </div>
+
+   
+        {% for i in rooms %}
+     
+        <div class="card mb-3" >
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{{ i.room_img.url }}" class="img-fluid h-100% w-100%"  alt="">
+              </div>
+              <div class="col-md-4">
+                <div class="card-body">
+                  <h3 class="card-title">{{i.room_type}}</h3>
+                  <p class="card-text">{{i.room_desc}}</p>
+                  <p class="card-text">Availabale rooms :{{i.room_available}}</p>
+                
+                </div>
+              </div>
+
+
+              <div class="col-md-4">
+                <div class="card-body">
+                
+                  <h2>₹ {{i.room_rent}}<small>/night</small></h2>
+                  <br>
+                  <button class="btn theme_btn button_hover">Book Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+         {% endfor %}
+         
+
+             
+       
+       
+
+
+
+
+    </div>
+</section>
+<!--================ Accomodation Area  =================-->
+
+<!--================ Facilities Area  =================-->
+<section class="facilities_area section_gap">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background="">  
+    </div>
+    <div class="container">
+        <div class="section_title text-center">
+            <h2 class="title_w"> Facilities</h2>
+            <p>Who are in extremely love with eco friendly system.</p>
+        </div>
+        <div class="row mb_30">
+            <div class="col-lg-4 col-md-6">
+                <div class="facilities_item">
+                    <h4 class="sec_h4"><i class="lnr lnr-dinner"></i>Restaurant</h4>
+                    <p>Usage of the Internet is becoming more common due to rapid advancement of technology and power.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="facilities_item">
+                    <h4 class="sec_h4"><i class="lnr lnr-bicycle"></i>Sports CLub</h4>
+                    <p>Usage of the Internet is becoming more common due to rapid advancement of technology and power.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="facilities_item">
+                    <h4 class="sec_h4"><i class="lnr lnr-shirt"></i>Swimming Pool</h4>
+                    <p>Usage of the Internet is becoming more common due to rapid advancement of technology and power.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="facilities_item">
+                    <h4 class="sec_h4"><i class="lnr lnr-car"></i>Rent a Car</h4>
+                    <p>Usage of the Internet is becoming more common due to rapid advancement of technology and power.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="facilities_item">
+                    <h4 class="sec_h4"><i class="lnr lnr-construction"></i>Gymnesium</h4>
+                    <p>Usage of the Internet is becoming more common due to rapid advancement of technology and power.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="facilities_item">
+                    <h4 class="sec_h4"><i class="lnr lnr-coffee-cup"></i>Bar</h4>
+                    <p>Usage of the Internet is becoming more common due to rapid advancement of technology and power.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================ Facilities Area  =================-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

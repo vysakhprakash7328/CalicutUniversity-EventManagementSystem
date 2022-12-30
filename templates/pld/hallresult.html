@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Report</title>
+</head>
+<body>
+    <h5 style="align-items: right;">Date:{{today}}</h5>
+   <center> <h1>Event report for {{hall}} from {{datestart}} to {{dateend}}</h1></center>
+
+   <div>
+
+    <h2>Event Details {{hall}}</h2>
+      <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Event Name</th>
+              <th scope="col">Event Venue</th>
+              <th scope="col">StartDate</th>
+              <th scope="col">EndDate</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in events %}
+              
+              
+
+            
+
+           
+            <tr>
+              <td>{{i.Event_name}}</td>
+              <td>{{i.Event_venue}}</td>
+              <td>{{i.Event_startDate}}</td>
+              <td>{{i.Event_endDate}}</td>
+              
+              
+            </tr>
+         
+             {% endfor %}
+             
+             
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <br>
+      <br>
+      <h5> Total of {{count}} events registered and approved in the Date range from {{datestart}} to {{dateend}}</h5>
+    
+
+
+    
+</body>
+</html>

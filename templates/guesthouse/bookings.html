@@ -1,0 +1,152 @@
+{% extends 'guesthouse/guestHouseBase.html' %}
+{% load static %}
+{% block content %} 
+
+   <!--================Breadcrumb Area =================-->
+
+
+
+
+
+   {% if data %}
+   <section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">Update Booking</h2>
+            <ol class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li class="active">Update</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div style="padding: 80px 20px;">
+        
+    <form method="post" action="{% url 'edit' data.booking_id %}">
+        {% csrf_token %}
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="exampleInputPassword1">Name</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" value="{{data.name}}" placeholder="Name" name="name" required>
+            </div>
+                    <div class="form-group col-md-4">
+                    <label for="exampleInputPassword1">Room Type</label>
+
+                    <select class="form-select" required name="roomtype" aria-label="Default select example">
+                        <option selected value="{{data.room_type}}">{{data.room_type}}</option>
+                        {% for i in roomType %}
+                        <option  value="{{i.room_type}}">{{i.room_type}}</option>
+                        {% endfor  %}
+                    </select>        
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="exampleInputPassword1">Number Of Rooms</label>
+                        <input type="number"required class="form-control" id="exampleInputPassword1" value="{{data.number_of_rooms}}" placeholder="Number of rooms" name="numberofrooms">
+                    </div>
+                 
+        </div>
+
+
+              <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="exampleInputPassword1">Number of persons</label>
+                    <input type="number"required class="form-control" id="exampleInputPassword1" value="{{data.number_of_persons}}" placeholder="Number of persons" name="numberofpersons">
+                </div>
+                    <div class="form-group col-md-4">
+                    <label for="exampleInputPassword1">Check IN</label>
+                    <input type="date" required class="form-control" id="exampleInputPassword1" value="{{data.check_in}}" name="checkin">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="exampleInputPassword1">Check Out</label>
+                        <input type="date" required class="form-control" id="exampleInputPassword1" value="{{data.check_out}}" name="checkout">
+                    </div>
+            </div>
+        
+         
+          <div class="form-group col-md-12 text-right">
+            <input class="btn theme_btn button_hover" type="submit" value="Book">
+
+        </div>
+        
+
+      </form>
+
+    </div>
+</div>
+
+   {% else %}
+   <section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">Booking</h2>
+            <ol class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li class="active">Booking</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div style="padding: 80px 20px;">
+        
+    <form method="post" action="{% url 'bookroom' %}">
+        {% csrf_token %}
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="exampleInputPassword1">Name</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Name" name="name" required>
+            </div>
+                    <div class="form-group col-md-4">
+                    <label for="exampleInputPassword1">Room Type</label>
+
+                    <select class="form-select" required name="roomtype" aria-label="Default select example">
+                        <option selected>Room Type</option>
+                        {% for i in roomType %}
+                        <option  value="{{i.room_type}}">{{i.room_type}}</option>
+                        {% endfor  %}
+                    </select>        
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="exampleInputPassword1">Number Of Rooms</label>
+                        <input type="number"required class="form-control" id="exampleInputPassword1" placeholder="Number of rooms" name="numberofrooms">
+                    </div>
+                 
+        </div>
+
+
+              <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="exampleInputPassword1">Number of persons</label>
+                    <input type="number"required class="form-control" id="exampleInputPassword1" placeholder="Number of persons" name="numberofpersons">
+                </div>
+                    <div class="form-group col-md-4">
+                    <label for="exampleInputPassword1">Check IN</label>
+                    <input type="date" required class="form-control" id="exampleInputPassword1" placeholder="Password" name="checkin">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="exampleInputPassword1">Check Out</label>
+                        <input type="date" required class="form-control" id="exampleInputPassword1" placeholder="Password" name="checkout">
+                    </div>
+            </div>
+        
+         
+          <div class="form-group col-md-12 text-right">
+            <input class="btn theme_btn button_hover" type="submit" value="Book">
+
+        </div>
+        
+
+      </form>
+
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}

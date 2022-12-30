@@ -1,0 +1,184 @@
+{% if events %}
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <script>
+        // Ignore this in your implementation
+        window.isMbscDemo = true;
+    </script>
+
+    <title>Add/edit/delete events</title>
+
+    <!-- Mobiscroll JS and CSS Includes -->
+    <link rel="stylesheet" href="{% static 'calendar/mobiscroll.javascript.min.css' %}">
+    <script src="{% static 'calendar/mobiscroll.javascript.min.js' %}"></script>
+    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+
+    <style type="text/css">
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    body,
+    html {
+        height: 100%;
+    }
+
+    .event-color-c {
+        display: flex;
+        margin: 16px;
+        align-items: center;
+        cursor: pointer;
+    }
+    
+    .event-color-label {
+        flex: 1 0 auto;
+    }
+    
+    .event-color {
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        margin-right: 10px;
+        margin-left: 240px;
+        background: #5ac8fa;
+    }
+    
+    .crud-color-row {
+        display: flex;
+        justify-content: center;
+        margin: 5px;
+    }
+    
+    .crud-color-c {
+        padding: 3px;
+        margin: 2px;
+    }
+    
+    .crud-color {
+        position: relative;
+        min-width: 46px;
+        min-height: 46px;
+        margin: 2px;
+        cursor: pointer;
+        border-radius: 23px;
+        background: #5ac8fa;
+    }
+    
+    .crud-color-c.selected,
+    .crud-color-c:hover {
+        box-shadow: inset 0 0 0 3px #007bff;
+        border-radius: 48px;
+    }
+    
+    .crud-color:before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -10px;
+        margin-left: -10px;
+        color: #f7f7f7;
+        font-size: 20px;
+        text-shadow: 0 0 3px #000;
+        display: none;
+    }
+    
+    .crud-color-c.selected .crud-color:before {
+        display: block;
+    }
+    </style>
+
+</head>
+<body>
+
+<div mbsc-page class="demo-create-read-update-delete-CRUD">
+  <div style="height:100%">
+      <div id="demo-add-delete-event"></div>
+    
+    
+      </div>
+</div>
+<script>
+    let a=[]
+    let mydata =[]
+    
+</script>
+{% for i in events %}
+<script>
+    
+    a=[...a,['{{i.Event_name}}',moment('{{i.Event_startDate}}').format('YYYY-MM-DD'),moment('{{i.Event_endDate}}').format('YYYY-MM-DD')]];
+
+mydata= [...mydata,
+        {"title" : '{{i.Event_name}}',
+        "start" : moment('{{i.Event_startDate}}').format('YYYY-MM-DD'),
+        "end" : moment('{{i.Event_endDate}}').format('YYYY-MM-DD'),
+            allDay: false,
+            free: false,
+            color: '#ff9900'},
+]
+</script>
+{% endfor %}
+
+<script>
+    console.log(mydata)
+ 
+    mobiscroll.setOptions({
+        locale: mobiscroll.localeEn,                                  // Specify language like: locale: mobiscroll.localePl or omit setting to use default
+        theme: 'ios',                                                 // Specify theme like: theme: 'ios' or omit setting to use default
+        themeVariant: 'light'                                         // More info about themeVariant: https://docs.mobiscroll.com/5-18-1/javascript/eventcalendar#opt-themeVariant
+    });
+    console.log(a.length)
+    for(let i=0;i<a.length;i++)
+    {
+    var oldEvent,
+        tempEvent = {},
+        deleteEvent,
+        restoreEvent,
+        colorPicker,
+        tempColor,
+        titleInput = document.getElementById('event-title'),
+        descriptionTextarea = document.getElementById('event-desc'),
+        allDaySwitch = document.getElementById('event-all-day'),
+        freeSegmented = document.getElementById('event-status-free'),
+        busySegmented = document.getElementById('event-status-busy'),
+        deleteButton = document.getElementById('event-delete'),
+        colorSelect = document.getElementById('event-color-picker'),
+        pickedColor = document.getElementById('event-color'),
+        colorElms = document.querySelectorAll('.crud-color-c'),
+        datePickerResponsive = {
+            medium: {
+                controls: ['calendar'],
+                touchUi: false
+            }
+        },
+        datetimePickerResponsive = {
+            medium: {
+                controls: ['calendar', 'time'],
+                touchUi: false
+            }
+        },
+        myData=mydata ;
+    }
+    var calendar = mobiscroll.eventcalendar('#demo-add-delete-event', {
+        clickToCreate: '',                                      // More info about clickToCreate: https://docs.mobiscroll.com/5-18-1/javascript/eventcalendar#opt-clickToCreate
+        // dragToCreate: true,                                           // More info about dragToCreate: https://docs.mobiscroll.com/5-18-1/javascript/eventcalendar#opt-dragToCreate
+        dragToMove: false,                                             // More info about dragToMove: https://docs.mobiscroll.com/5-18-1/javascript/eventcalendar#opt-dragToMove
+        dragToResize: false,                                           // More info about dragToResize: https://docs.mobiscroll.com/5-18-1/javascript/eventcalendar#opt-dragToResize
+        view: {                                                       // More info about view: https://docs.mobiscroll.com/5-18-1/javascript/eventcalendar#opt-view
+            calendar: { labels: true }
+        },
+        data: myData,                                                 // More info about data: https://docs.mobiscroll.com/5-18-1/javascript/eventcalendar#opt-data
+        
+    });
+    
+    
+    </script>
+{% endif %}
+</body>
+</html>

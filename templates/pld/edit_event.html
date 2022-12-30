@@ -1,0 +1,351 @@
+
+
+
+
+
+{% extends 'header/mainbase.html' %}
+{% block content %}
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/redmond/jquery-ui.css" rel="stylesheet"/>
+<script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+
+<style>
+  
+.ui-datepicker td.ui-state-disabled>span{background:rgb(251, 249, 249);}
+.ui-datepicker td.ui-state-disabled{opacity:100;}
+/* .ui-datepicker-week-end >.ui-state-default{
+    background: red ;
+} */
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #c5dbec; background:rgb(70, 233, 55) url(images/ui-bg_glass_85_dfeffc_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #2e6e9e; }
+
+</style>
+<div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+  <div class="p-4">
+  <h2 style="font-weight: 800;">UPDATE EVENT</h2>
+      
+      <hr>
+      <br>
+    
+      
+      
+      
+      
+      
+      <form action="" method="post">
+     
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        <h3 id="h3"></h3>
+        <input type="submit" value="submit" class="btn btn-success">
+        <button class="btn btn-success" type=""><a href="{% url 'home' %}" style="text-decoration: none; color: white;">Back</a></button>
+        
+
+
+
+
+        </select>
+      </form>
+
+          
+    </div>
+  </div>
+  </div>
+    
+      <script language="javascript">
+       
+
+let a=[]
+let dateRange = [];
+
+
+        "{% if public_venues %}"
+              var selectElement = document.getElementById("select");
+
+              while (selectElement.length > 0) {
+                selectElement.remove(0);
+              }
+              $("#select").append( $("<option>")
+                    .val("null")
+                    .html("Select venue")
+                );
+              "{% for j in public_venues %}"
+                      console.log("{{j}}")
+                    $("#select").append( $("<option>")
+                          .val("{{j.Hall_id}}")
+                          .html("{{j.Hall_name}}")
+                      );
+                "{% endfor %}"
+
+
+          $('#select').on('change', function() {
+         
+         dateRange.length=0;
+         a.length=0;
+         let value='';
+         value = select.options[select.selectedIndex].value;
+       
+    
+       "{% for i in all %}"
+
+       if("{{i.Event_venue_id}}" == value)
+       {
+              
+                 a=[...a,[moment('{{i.Event_startDate}}').format('YYYY-MM-DD'),moment('{{i.Event_endDate}}').format('YYYY-MM-DD')]];
+
+       }
+       "{% endfor %}"
+      console.log(a)
+        
+    
+
+       for (let i = 0; i < a.length; i++) {
+               
+                   let startDate = a[i][0];// some start date
+                   let endDate  = a[i][1]; // some end date
+                   
+                   for (var d = new Date(startDate); d <= new Date(endDate); d.setDate(d.getDate() + 1)) {
+                     dateRange.push($.datepicker.formatDate('yy-mm-dd', d));
+                 }
+
+                 var disableDates = function(dt) {
+                     var dateString = jQuery.datepicker.formatDate('yy-mm-dd', dt);
+                     return [dateRange.indexOf(dateString) == -1];
+                 }
+             
+                 let sub1;
+                 
+                 $(".datepicker").datepicker({ 
+                      singleDatePicker: true,
+                     dateFormat : 'yy-mm-dd',
+                     numberOfMonths :2,
+                     changeYear:true,
+                     changeMonth: true,
+                     minDate: 0,
+                     beforeShowDay: disableDates,
+                     onSelect: function(date) {
+                       $(".datepicker1").datepicker('option', 'minDate', date);
+                   
+                       //get max date from daterage
+                       if(dateRange.length > 0){
+                       const arr = dateRange;
+                             //  Get Max date
+                             const maxDate = new Date(
+                               Math.max(
+                                 ...arr.map(element => {
+                                   return new Date(element);
+                                 }),
+                               ),
+                             ); 
+                       //subtractionof max date and selected date
+                       const date1 = new Date(maxDate);
+                       const date2 = new Date(date);
+                       const diffTime = Math.abs(date2 - date1);
+                       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                       sub1= diffDays;
+                      
+
+                       for(let i=0;i<dateRange.length;i++){
+                       if(dateRange[i]>date){
+                       const date3 = new Date(dateRange[i]);
+                       const date4 = new Date(date);
+                       const diffTimes = Math.abs(date4 - date3);
+                       const diffDaysloop = Math.ceil(diffTimes / (1000 * 60 * 60 * 24));
+                         if(diffDaysloop < sub1){
+                             sub1=diffDaysloop;
+                             mydate=dateRange[i];
+                         }
+                       }
+                       }
+                       console.log(maxDate)
+                       console.log(new Date(date))
+
+                         if(maxDate > new Date(date)){
+                           $(".datepicker1").datepicker('option', 'maxDate', mydate);
+
+                         }else{
+
+                         }
+                     }}
+                 
+                   });
+
+                 $(".datepicker1").datepicker({
+                   minDate: 0,
+                   dateFormat : 'yy-mm-dd',
+                   numberOfMonths :2,
+                   changeYear:true,
+                   changeMonth: true,
+                   beforeShowDay: disableDates,
+                 });
+           
+              
+         }
+        
+              
+      
+         console.log(dateRange)
+
+ 
+
+
+
+
+     });
+        "{% else %}"
+
+
+
+        
+
+
+         $('#select').on('change', function() {
+         
+          dateRange.length=0;
+          a.length=0;
+          let value='';
+          value = select.options[select.selectedIndex].value;
+        
+     
+        "{% for i in all %}"
+
+        if("{{i.Event_venue_id}}" == value)
+        {
+               
+                  a=[...a,[moment('{{i.Event_startDate}}').format('YYYY-MM-DD'),moment('{{i.Event_endDate}}').format('YYYY-MM-DD')]];
+
+        }
+        "{% endfor %}"
+       
+     
+
+        for (let i = 0; i < a.length; i++) {
+                
+                    let startDate = a[i][0];// some start date
+                    let endDate  = a[i][1]; // some end date
+                    
+                    for (var d = new Date(startDate); d <= new Date(endDate); d.setDate(d.getDate() + 1)) {
+                      dateRange.push($.datepicker.formatDate('yy-mm-dd', d));
+                  }
+
+                  var disableDates = function(dt) {
+                      var dateString = jQuery.datepicker.formatDate('yy-mm-dd', dt);
+                      return [dateRange.indexOf(dateString) == -1];
+                  }
+              
+                  let sub1;
+                  
+                  $(".datepicker").datepicker({ 
+                       singleDatePicker: true,
+                      dateFormat : 'yy-mm-dd',
+                      numberOfMonths :2,
+                      changeYear:true,
+                      changeMonth: true,
+                      minDate: 0,
+                      beforeShowDay: disableDates,
+                      onSelect: function(date) {
+                        $(".datepicker1").datepicker('option', 'minDate', date);
+                    
+                        //get max date from daterage
+                        if(dateRange.length > 0){
+                        const arr = dateRange;
+                              //  Get Max date
+                              const maxDate = new Date(
+                                Math.max(
+                                  ...arr.map(element => {
+                                    return new Date(element);
+                                  }),
+                                ),
+                              ); 
+                        //subtractionof max date and selected date
+                        const date1 = new Date(maxDate);
+                        const date2 = new Date(date);
+                        const diffTime = Math.abs(date2 - date1);
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                        sub1= diffDays;
+                       
+
+                        for(let i=0;i<dateRange.length;i++){
+                        if(dateRange[i]>date){
+                        const date3 = new Date(dateRange[i]);
+                        const date4 = new Date(date);
+                        const diffTimes = Math.abs(date4 - date3);
+                        const diffDaysloop = Math.ceil(diffTimes / (1000 * 60 * 60 * 24));
+                          if(diffDaysloop < sub1){
+                              sub1=diffDaysloop;
+                              mydate=dateRange[i];
+                          }
+                        }
+                        }
+                        console.log(maxDate)
+                        console.log(new Date(date))
+
+                          if(maxDate > new Date(date)){
+                            $(".datepicker1").datepicker('option', 'maxDate', mydate);
+
+                          }else{
+
+                          }
+                      }}
+                  
+                    });
+
+                  $(".datepicker1").datepicker({
+                    minDate: 0,
+                    dateFormat : 'yy-mm-dd',
+                    numberOfMonths :2,
+                    changeYear:true,
+                    changeMonth: true,
+                    beforeShowDay: disableDates,
+                  });
+            
+               
+          }
+         
+               
+       
+          // console.log(dateRange)
+
+  
+
+
+
+
+      });
+      
+      "{% endif %}"
+
+    </script>
+    <!-- script for vanue amount -->
+<script>
+  let amount=[]
+
+
+  $('#select').on('change', function() {
+           
+        
+    value = select.options[select.selectedIndex].value;
+    console.log(value)
+    
+  "{% for i in all_venues %}"
+  
+  if("{{i.Hall_id}}" == value)
+  {
+         
+            amount=['{{i.Amount}}'];
+            document.getElementById("h3").innerHTML = "Amount : " + '{{i.Amount}}' +"/-";
+  
+  }
+  "{% endfor %}"
+  console.log(amount)
+  });
+  
+  
+  </script>
+
+
+
+   
+{% endblock %}

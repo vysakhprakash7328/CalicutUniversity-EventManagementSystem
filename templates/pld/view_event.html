@@ -1,0 +1,365 @@
+{% extends 'header/mainbase.html' %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+
+
+   
+
+<div class="card">
+      <div class="card-header">
+        {{ event.Event_name }}
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Venue: {{ event.Event_venue }}</h5>
+        <p class="card-text">
+              <ul>
+    <li>Event Manager : {{ event.Event_manager }}</li>
+    <li>Start Date : {{ event.Event_startDate }}</li>
+    <li>End Date : {{ event.Event_endDate }}</li>
+    
+    <li>Event Discription : {{ event.Event_description }}</li>
+    
+
+      {% if event.Event_status == 0 %}
+      <li>
+      <h6 style="color: rgb(93, 106, 200);">Pending for varification</h6>
+      {% elif event.Event_status == 1 %}
+      <h6 style="color: Green;">Approved</h6>
+      {% elif event.Event_status == 2 %}
+      <h6 style="color: Red;">Cancelled</h6>
+    </li>
+      {% endif %}
+    
+    
+    {% if mainuserid or user.is_authenticated %}
+          {% if event.Instrument_details != NULL %}
+          <li>Requested instruments : {{event.Instrument_details}}</li>
+          {% endif %}
+    {% endif %}
+
+
+    {% if event.Event_status == 3 and event.waiting_list == 2 %}
+    <li>
+    <h6 style="color: rgb(188, 101, 152);">This Event is in waiting list</h6>
+
+  </li>
+    {% elif event.Event_status == 0 %}
+
+    {% if event.waiting_list == 2  %}
+
+    <h6 style="color: rgb(188, 101, 152);">This Event is in waiting list</h6>
+
+
+
+
+    {% elif event.waiting_list == 1 %}
+
+
+
+                          {% if event.Resubmission == 1 %}
+                          <td><h6>The Event Manager is requested for resubmiting this event</h6></td>
+                          <td><button class="btn btn-success"><a href="{% url 'reqresubmission' event.Event_id %}" style="text-decoration: none; color: white;">Grant Permission</a> </button></td>
+
+                          {% elif mainuserid %}
+                          
+                          
+                          <form method="POST" action="{% url 'event_approved' event.Event_id %}">
+                          {% csrf_token %}
+                          <td><select name="approvedby" required class="form-select " data-width="10px">
+                            {% for u in variusers %}
+                            
+                        
+                          
+                            
+                            
+                            
+                            
+
+                            <option value="{{u.type}}">{{u.type}}</option>
+                        
+                          
+                        
+                            {% endfor %}
+                            <option value="approved">Final Approve</option>
+                          </select>
+                        </td>
+                        <br>
+                        <td><input type="submit" value="Approve" class="btn btn-success" name="approve"/></td>
+                      <td><input type="button" value="Cancel" class="btn btn-danger" name="cancel" onclick="alertsweet()"/></td>
+
+                        </form>
+                      {% endif %}
+
+
+    {% elif event.waiting_list == 0 %}
+    {% if event.Resubmission == 1 %}
+                <td><h6>The Event Manager is requested for resubmiting this event</h6></td>
+                <td><button class="btn btn-success"><a href="{% url 'reqresubmission' event.Event_id %}" style="text-decoration: none; color: white;">Grant Permission</a> </button></td>
+
+                {% else %}
+                
+                
+                <form method="POST" action="{% url 'event_approved' event.Event_id %}">
+                 {% csrf_token %}
+
+
+
+                {% if headid %}
+                      {% for i in eve %}
+                              {% if event.Event_id == i.event_id %}
+                              <td><select name="approvedby"  required class="form-select " data-width="10px" required>
+                                {% for j in hall %}
+                                      {% for k in dep %}
+                                            {% if j.Hall_id == event.Event_venue_id %}
+                                            
+                                                  {% if j.Hall_manager == "admin" %}
+                                                  <option value="PLD">PLD</option>
+                                                  {% elif j.Hall_manager == k.department_name %}
+                                  
+                                                  
+                                                  
+                                                  
+                                                  {% else %}
+                                  
+                                                  <option>{{j.Hall_manager}}</option>
+                                  
+                                                  {% endif %}
+                                            {% endif %}
+                                      {% endfor %}
+                                {% endfor %}
+                                
+                
+                                
+                                <option value="approved">Final Approve</option>
+                              </select>
+                            </td>
+                            <td><input type="submit" value="Approve" class="btn btn-success" name="approve"/></td>
+                          <td><input type="button" value="Cancel" class="btn btn-danger" name="cancel" onclick="alertsweet()"/></td>
+
+                            {% endif %}
+                    {% endfor %}
+              
+                {% endif %}
+
+
+
+
+                 {% if user.is_authenticated  %}
+                        <td><select name="approvedby" required class="form-select " data-width="10px">
+                          {% for u in variusers %}
+                          
+                      
+                        
+                          
+                          
+                          
+                          
+
+                          <option value="{{u.type}}">{{u.type}}</option>
+                      
+                        
+                      
+                          {% endfor %}
+                          <option value="approved">Final Approve</option>
+                        </select>
+                      </td>
+                      <td><input type="submit" value="Approve" class="btn btn-success" name="approve"/></td>
+                    <td><input type="button" value="Cancel" class="btn btn-danger" name="cancel" onclick="alertsweet()"/></td>
+
+              {% endif %}
+
+
+
+              <br>
+              
+              </form>
+              
+            {% endif %}
+            {% endif %}
+         
+
+         
+            {% endif %}
+
+
+
+
+
+
+
+
+
+    {% if user.is_authenticated or headid %}
+
+    {% if event.Event_status == 1  %}
+
+    <li>If there is any high priority program comes on the same date: <input type="button" value="Cancel Event" class="btn btn-danger" name="cancel" onclick="alertsweet2()"/>
+    </li>
+    {% endif %}
+    {% endif %}
+    {% if user.is_authenticated or headid or depid %}
+
+
+    <br>
+    <br>
+    <br>
+    <div>
+
+      <h2 style="font-weight: 800;">Waiting List</h2>
+      <hr>
+      <br>
+      <div style="overflow:auto;">
+        <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Event ID</th>
+                <th scope="col">Event Name</th>
+                <th scope="col">Event Venue</th>
+                <th scope="col">Event Start Date</th>
+                <th scope="col">Event End Date</th>
+                <th scope="col">Details</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for j in obj %}
+              
+
+
+
+        
+                
+                
+
+              
+
+             
+              <tr>
+                <th scope="row">{{j.Event_id}}</th>
+                <td>{{j.Event_name}}</td>
+                <td>{{j.Event_venue}}</td>
+                <td>{{j.Event_startDate}}</td>
+                <td>{{j.Event_endDate}}</td>
+                <td><button class="btn btn-success"><a href="{% url 'singlevent' j.Event_id %}" style="text-decoration: none; color: white;">view</a> </button></td>
+                {% if j.Event_status == 1 %}
+                <td style="color: green;">Approved</td>
+
+                {% endif %}
+         
+
+
+                
+              </tr>
+
+              
+            
+               {% endfor %}
+               
+            </tbody>
+          </table>
+        </div>
+        </div>
+    {% endif %}
+    
+          </ul>
+    
+    
+    
+        </p>
+        
+      </div>
+
+      </div>
+      <br>
+
+      
+      </div>
+    </div>
+  </div>
+
+      <script>
+        function alertsweet(){
+          Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to cancel this event!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'No',
+      confirmButtonText: 'Yes, Cancell it!'
+      }).then((result) => {
+      if (result.isConfirmed) {
+      Swal.fire(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success',
+      
+      )
+      Swal.fire({
+      title: 'Reason for cancellation',
+      html: `<form method = 'post' action='{% url 'cancelevent' event.Event_id %}'>{% csrf_token %}<input type="text" name="reason" class="swal2-input" placeholder="Reason for cancellation"><input type = "submit" class="SwalBtn1 customSwalBtn" value="Submit"></form>`,
+      showConfirmButton: false,
+      focusConfirm: false,
+    
+    
+      
+    }).then((result) => {
+      Swal.fire({
+     
+      icon: 'success',
+      title: 'Event Cancelled successfully',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    })	}
+      })
+    
+        }
+        </script>
+      
+      <script>
+        function alertsweet2(){
+          Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to cancel this event!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'No',
+      confirmButtonText: 'Yes, Cancell it!'
+      }).then((result) => {
+      if (result.isConfirmed) {
+      Swal.fire(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success',
+      
+      )
+      Swal.fire({
+      title: 'Reason for cancellation',
+      html: `<form method = 'post' action='{% url 'cancel' event.Event_id %}'>{% csrf_token %}<input type="text" name="reason" class="swal2-input" placeholder="Reason for cancellation"><input type = "submit" class="SwalBtn1 customSwalBtn" value="Submit"></form>`,
+      showConfirmButton: false,
+      focusConfirm: false,
+    
+    
+      
+    }).then((result) => {
+      Swal.fire({
+     
+      icon: 'success',
+      title: 'Event Cancelled successfully',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    })	}
+      })
+    
+        }
+        </script>
+      
+
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends 'guesthouse/guestHouseBase.html' %}
+{% load static %}
+{% block content %} 
+
+   <!--================Breadcrumb Area =================-->
+   <section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <ol class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li class="active">All bookings</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="accomodation_area section_gap">
+  <div class="container">
+      <div class="section_title text-center">
+          <h2 class="title_color">All Bookings</h2>
+      </div>
+      <div class="container">
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Requests</a>
+          <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Aproved and Cancelled</a>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            
+            
+            
+            
+            
+            
+            <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                    <th>Name</th>
+                    <th>Room Type</th>
+                    <th>number of room</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Edit</th>
+                
+                  </tr>
+                  {% for i in data %}
+                  {% if i.status == 0 %}
+                  <tr>
+        
+                    
+                    <td>{{i.name}}</td>
+                    <td>{{i.room_type}}</td>
+        
+                    <td>{{i.number_of_rooms}}</td>
+        
+                    <td>{{i.check_in}}</td>
+        
+                    <td>{{i.check_out}}</td>
+                   
+                    <td>
+                        <a href="{% url 'aprovebooking' i.booking_id %}"><button class="btn btn-primary">Aprove</button></a>
+                        <a href="{% url 'roomcancel' i.booking_id %}"><button class="btn btn-danger">cancel</button></a>
+        
+                    </td>
+                  
+        
+                  </tr>
+                  {% endif %}
+                  {% endfor %}
+                </table>
+              </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+
+
+            <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                    <th>Name</th>
+                    <th>Room Type</th>
+                    <th>number of room</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th> Status</th>
+
+                
+                  </tr>
+                  
+                  {% for i in data %}
+                  {% if i.status == 2 or i.status == 3 %}
+                  <tr>
+        
+                    
+                    <td>{{i.name}}</td>
+                    <td>{{i.room_type}}</td>
+        
+                    <td>{{i.number_of_rooms}}</td>
+        
+                    <td>{{i.check_in}}</td>
+        
+                    <td>{{i.check_out}}</td>
+                    {% if i.status == 3%}
+                    <td style="color: red;">Cancelled</td>
+                    {% else %}
+                    <td style="color: green ;"> Aproved</td>
+
+                    {% endif%}
+
+                 
+                   
+                  
+        
+                  </tr>
+                  {% endif %}
+                  {% endfor %}
+                </table>
+              </div>
+
+
+
+        </div>
+      </div>
+      </div>
+
+
+
+
+
+     
+        
+</div>
+</section>
+<script>
+    $('#myTab a').on('click', function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+
+</script>
+
+
+{% endblock %}

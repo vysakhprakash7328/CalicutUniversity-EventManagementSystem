@@ -1,0 +1,270 @@
+<!-- ============================================================== -->
+<aside class="left-sidebar" data-sidebarbg="skin5"       style="background-color:red;"
+>
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar"  >
+      <!-- Sidebar navigation-->
+      <nav class="sidebar-nav" >
+        <ul id="sidebarnav" class="pt-4">
+          {% if user.is_authenticated or mainuserid or publicid %}
+
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{% url 'home' %}"
+              aria-expanded="false"
+              ><i class="mdi mdi-view-dashboard"></i
+              ><span class="hide-menu">My Home</span></a
+            >
+          </li>
+          {% elif headid or depid or unionid %}
+
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{% url 'Department' %}"
+              aria-expanded="false"
+              ><i class="mdi mdi-view-dashboard"></i
+              ><span class="hide-menu">My Home</span></a
+            >
+          </li>
+          {% elif proid %}
+
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{% url 'pro_home' %}"
+              aria-expanded="false"
+              ><i class="mdi mdi-view-dashboard"></i
+              ><span class="hide-menu">My Home</span></a
+            >
+          </li>
+          {% elif guestid %}
+
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{% url 'guest_home' %}"
+              aria-expanded="false"
+              ><i class="mdi mdi-view-dashboard"></i
+              ><span class="hide-menu">My Home</span></a
+            >
+          </li>
+          {% else %}
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link has-arrow waves-effect waves-dark"
+              href="javascript:void(0)"
+              aria-expanded="false"
+              ><i class="mdi mdi-receipt"></i
+              ><span class="hide-menu">Requests </span></a
+            >
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="{% url 'dep_request' %}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Department Head Request</span></a
+                >
+              </li>
+              <li class="sidebar-item">
+                <a href="{% url 'union_request' %}" class="sidebar-link"
+                  ><i class="mdi mdi-note-plus"></i
+                  ><span class="hide-menu">Union Request</span></a
+                >
+              </li>
+             
+            </ul>
+          </li>
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link has-arrow waves-effect waves-dark"
+              href="javascript:void(0)"
+              aria-expanded="false"
+              ><i class="mdi mdi-receipt"></i
+              ><span class="hide-menu">Login </span></a
+            >
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="{% url 'login'%}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Login</span></a
+                >
+              </li>
+              <li class="sidebar-item">
+                <a href="{% url 'public_login' %}" class="sidebar-link"
+                  ><i class="mdi mdi-note-plus"></i
+                  ><span class="hide-menu">Public Login</span></a
+                >
+              </li>
+             
+            </ul>
+          </li>
+
+         
+
+          {% endif %}
+         
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link has-arrow waves-effect waves-dark"
+              href="javascript:void(0)"
+              aria-expanded="false"
+              ><i class="mdi mdi-receipt"></i
+              ><span class="hide-menu">Events </span></a
+            >
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="{% url 'all_event' %}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> All Events</span></a
+                >
+              </li>
+              {% if user.is_authenticated or depid or unionid or publicid %}
+              <li class="sidebar-item">
+                <a href="{% url 'create_event' %}" class="sidebar-link"
+                  ><i class="mdi mdi-note-plus"></i
+                  ><span class="hide-menu">Add Event</span></a
+                >
+              </li>
+              
+              <li class="sidebar-item">
+                <a href="{% url 'my_events' %}" class="sidebar-link"
+                  ><i class="mdi mdi-note-plus"></i
+                  ><span class="hide-menu">My Events</span></a
+                >
+              </li>
+
+              <li class="sidebar-item">
+                <a href="{% url 'track_event'%}" class="sidebar-link"
+                  ><i class="mdi mdi-note-plus"></i
+                  ><span class="hide-menu">Track Events</span></a
+                >
+              </li>
+              {% elif headid %}
+              <li class="sidebar-item">
+                <a href="{% url 'my_events' %}" class="sidebar-link"
+                  ><i class="mdi mdi-note-plus"></i
+                  ><span class="hide-menu">My Events</span></a
+                >
+              </li>
+              <li class="sidebar-item">
+                <a href="{% url 'track_event'%}" class="sidebar-link"
+                  ><i class="mdi mdi-note-plus"></i
+                  ><span class="hide-menu">Track Events</span></a
+                >
+              </li>
+             
+              {% endif %}
+            </ul>
+          </li>
+          
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link has-arrow waves-effect waves-dark"
+              href="javascript:void(0)"
+              aria-expanded="false"
+              ><i class="mdi mdi-receipt"></i
+              ><span class="hide-menu">Venues </span></a
+            >
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="{% url 'view_venue' %}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> All Venues</span></a
+                >
+              </li>
+              {% if user.is_authenticated or headid  %}
+              <li class="sidebar-item">
+                <a href="{% url 'add_venue'  %}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> Add Venues</span></a
+                >
+              </li>
+              <li class="sidebar-item">
+                <a href="{% url 'my_venues'  %}" class="sidebar-link"
+                  ><i class="mdi mdi-note-outline"></i
+                  ><span class="hide-menu"> My Venues</span></a
+                >
+              </li>
+              {% endif %}
+
+              
+            </ul>
+          </li>
+          {% if headid %}
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{% url 'view_users'%}"
+              aria-expanded="false"
+              ><i class="mdi mdi-border-inside"></i
+              ><span class="hide-menu">My Departments</span></a
+            >
+          </li>
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{% url 'guest_home' %}"
+              aria-expanded="false"
+              ><i class="mdi mdi-border-inside"></i
+              ><span class="hide-menu">GuestHouse Booking</span></a
+            >
+          </li>
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{% url 'pdf_report' %}"
+              aria-expanded="false"
+              ><i class="mdi mdi-border-inside"></i
+              ><span class="hide-menu">Generate Report</span></a
+            >
+          </li>
+          {% endif %}
+          {% if user.is_authenticated or mainuserid or depid or unionid %}
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{% url 'guest_home' %}"
+              aria-expanded="false"
+              ><i class="mdi mdi-border-inside"></i
+              ><span class="hide-menu">GuestHouse Booking</span></a
+            >
+          </li>
+          {% endif %}
+          {% if user.is_authenticated or mainuserid or depid or unionid or headid or publicid %}
+
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{% url 'pdf_report' %}"
+              aria-expanded="false"
+              ><i class="mdi mdi-border-inside"></i
+              ><span class="hide-menu">Generate Report</span></a
+            >
+          </li>
+          
+
+          <li class="sidebar-item">
+            <a
+              class="sidebar-link waves-effect waves-dark sidebar-link"
+              href="{% url 'logout'%}"
+              aria-expanded="false"
+              ><i class="mdi mdi-border-inside"></i
+              ><span class="hide-menu">Logout</span></a
+            >
+          </li>
+          {% endif %}
+         
+          
+          
+         
+        </ul>
+      </nav>
+      <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+  </aside>
+  <!-- ============================================================== -->
+  <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+  <!-- ============================================================== -->
+  

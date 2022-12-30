@@ -1,0 +1,53 @@
+{% extends 'header/mainbase.html' %}
+
+{% block content %}
+
+<div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+    <div class="p-4">
+      <h2 style="font-weight: 800;">Halls available for you</h2>
+  <hr>
+  <div style="overflow:auto;">
+          <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Hall Name</th>
+                  <th scope="col">Hall Location</th>
+                  <th scope="col">Hall Capacity</th>
+                  <th scope="col">Owner</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Availability</th>
+  
+                  <th scope="col">Details</th>
+              
+                </tr>
+              </thead>
+              <tbody>
+                  {% for i in venues %}
+                <tr>
+                  <th scope="row">{{i.Hall_name}}</th>
+                  <td>{{i.Hall_location}}</td>
+                  <td>{{i.Hall_capacity}}</td>
+                  <td>{{i.Hall_manager}}</td>
+                  <td>{{i.Amount}}</td>
+                  <td>{% if i.Hall_availability == 1 %}
+                        <h5 style="color: green;">Available</h5>
+                        {% else %}
+                        <h5 style="color: red;">Not Available right now...</h5>
+                        {% endif %}
+                  </td>
+                  <td><button class="btn btn-success"><a href="{% url 'singlevenue' i.Hall_id %}" style="text-decoration: none; color: white;">view</a> </button></td>
+                  {% if user.is_authenticated %}
+                  {% if user == i.Hall_manager %}
+                  <td><button class="btn btn-success"> <a href="{% url 'updatevenue' i.Hall_id %}" style="text-decoration: none; color: white;">Update</a></button></td>
+                  {% endif %}
+                  {% endif %}
+               
+  
+                  
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+    </div></div>
+  </div>
+{% endblock %}

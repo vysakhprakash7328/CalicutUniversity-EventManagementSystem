@@ -1,0 +1,342 @@
+{% extends 'header/mainbase.html' %}
+{% block content %}
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+
+<div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+    <div class="p-4">
+      <h2>CREATE PRIORITY EVENT</h2>
+        <br>
+      
+        
+
+        
+       
+              
+
+
+    <div class="row form-group" >
+                    <div class="form-group col-md-3">
+                       
+                            <label for="select">Select Venue</label>
+                            <select id="select" class="form-control">
+                            </select>
+                    
+                    </div>
+
+
+
+                    <div class="form-group col-md-3">
+                        <label for="start">Start Date</label>
+                        <input type="date" class="form-control" id="start" required>
+
+                    </div>
+
+
+
+
+                    <div class="form-group col-md-3">
+                        <label for="end">End Date</label>
+                        <input type="date" class="form-control" id="end" required >
+
+                    </div>
+                    <div class="form-group col-md-1 col-sm-4 ">
+                        <br>
+                        <button  id="submit"  class="btn btn-primary" > Submit </button>
+
+                    </div>
+                </div>
+         
+               
+
+      
+  
+        
+        
+        
+<br>
+<br>
+<div style="display: none;" id='info'>
+    <h3>please enter valid date and venue..</h3>
+    </div>
+
+
+            <div style="display: none;" id='div'>
+                <h3>Events occur in this date..</h3>
+                <br>
+
+                <table class="table table-bordered" id=tables>
+
+                </table>
+                <br>
+                <h3>Add Events</h3> 
+            </div> 
+
+
+            <div style="display: none;" id='div1'>
+                <h3>No events occur in this date..</h3>
+                <br>
+
+
+                <h3>Add Events</h3>
+              
+                
+            </div> 
+            <div style="display: none;" id="formDiv">
+                <form method="POST" action="">
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+                    <h3 id="h3"></h3>
+                <input type="submit" class="btn btn-success">
+            </form>
+            </div>
+               
+       
+      </div>
+    </div>
+  
+  
+ 
+   <script>
+
+// create tabele
+
+function generateTableHead(table, data) {
+  let thead = table.createTHead();
+  let row = thead.insertRow();
+  for (let key of data) {
+    let th = document.createElement("th");
+    let text = document.createTextNode(key);
+    th.appendChild(text);
+    row.appendChild(th);
+  }
+}
+
+function generateTable(table, data) {
+  for (let element of data) {
+    let row = table.insertRow();
+    for (key in element) {
+      let cell = row.insertCell();
+      let text = document.createTextNode(element[key]);
+      cell.appendChild(text);
+    }
+  }
+}
+
+let table = document.querySelector("table");
+
+                
+
+
+        const targetDiv = document.getElementById("div");
+        const targetDiv1 = document.getElementById("div1");
+        const formDiv =document.getElementById("formDiv");
+        const info =document.getElementById("info");
+
+
+        let amount=[]
+        let end ='';
+        let events=[];
+        let start ='';
+        let values='';
+       
+       let selectElement = document.getElementById("#select");
+
+             
+                $("#select").append( $("<option>")
+                    .val("")
+                    .html("Select venue")
+                );
+                "{% for j in venues %}"
+                   
+                    $("#select").append( $("<option>")
+                            .val("{{j.Hall_id}}")
+                            .html("{{j.Hall_name}}")
+                        );
+                "{% endfor %}"
+
+      
+                $('#select').on('change', function() {
+                    
+                    values = select.options[select.selectedIndex].value;
+                   
+                    "{% for i in all_venues %}"
+    
+                    if("{{i.Hall_id}}" == values)
+                    {
+                        
+                            amount=['{{i.Amount}}'];
+                            document.getElementById("h3").innerHTML = "Amount : " + '{{i.Amount}}' +"/-";
+                    
+                    }
+                    "{% endfor %}"
+                    console.log(amount)
+                })
+       
+                 
+                 document.getElementById('end').addEventListener('change', function() {
+                    end=this.value
+                });
+                document.getElementById('start').addEventListener('change', function() {
+                    start=this.value
+                });
+        
+              
+            $( "#submit" ).click(function() {
+                $('#tables').empty();
+                events.length=0;
+                    let startDate=''
+                    let endDate=''
+                    
+
+                    let venue = document.getElementById('venue')
+                    let startd = document.getElementById('startd')
+                    let endd = document.getElementById('endd')
+                 
+
+                   
+                    
+                    
+                if(values == "" || end == "" || start == ""){
+                    console.log("null")
+                    if (info.style.display == "none") {
+                        info.style.display = "block";
+                        formDiv.style.display = "none";
+                        targetDiv1.style.display = "none";
+
+                        targetDiv.style.display = "none";
+                                 
+                                }else{
+                                    info.style.display = "block";
+                                    formDiv.style.display = "none";
+                                    targetDiv1.style.display = "none";
+
+                                    targetDiv.style.display = "none";
+
+                                }
+
+
+
+
+
+
+                }else{
+                    venue.value=values
+                    startd.value=start
+                    endd.value=end
+
+
+
+
+            
+                    // startd.classList.add("col-md-6");
+                    // endd.classList.add("col-md-6");
+
+
+
+
+
+                "{% for i in event %}"
+
+               
+                        
+           
+               
+                startDate=moment('{{i.Event_startDate}}').format('YYYY-MM-DD')
+                endDate=moment('{{i.Event_endDate}}').format('YYYY-MM-DD')
+            
+                if("{{i.Event_venue_id}}" == values){
+                    
+
+                                    if (startDate <= start && end <= endDate){
+
+                                            events=[...events,{Id:"{{i.Event_id}}",Name: "{{i.Event_name}}", Owner:"{{i.Event_manager}}" ,Startdate: "{{i.Event_startDate}}",Enddate:"{{i.Event_endDate}}"}];
+
+                                    }
+                                    else if(startDate >= start && end >= endDate){
+
+                                        events=[...events,{Id:"{{i.Event_id}}",Name: "{{i.Event_name}}", Owner:"{{i.Event_manager}}" ,Startdate: "{{i.Event_startDate}}",Enddate:"{{i.Event_endDate}}"}];
+
+                                    }else if( startDate <= start && start<= endDate){
+                                        events=[...events,{Id:"{{i.Event_id}}",Name: "{{i.Event_name}}", Owner:"{{i.Event_manager}}" ,Startdate: "{{i.Event_startDate}}",Enddate:"{{i.Event_endDate}}"}];
+
+
+                                    }else if( startDate <= end && end<= endDate){
+
+                                        events=[...events,{Id:"{{i.Event_id}}",Name: "{{i.Event_name}}", Owner:"{{i.Event_manager}}" ,Startdate: "{{i.Event_startDate}}",Enddate:"{{i.Event_endDate}}"}];
+
+
+                                    }
+                            
+                                };
+
+                                "{% endfor %}"
+
+                           
+                                                            
+                                events=[...new Set(events)]
+
+                            if(events.length ==0){
+                                if (targetDiv1.style.display == "none") {
+                                    targetDiv1.style.display = "block";
+                                    formDiv.style.display = "block";
+                                    info.style.display = "none";
+                                    targetDiv.style.display = "none";
+                                 
+                                }else{
+                                    targetDiv1.style.display = "block";
+                                    formDiv.style.display = "block";
+                                    info.style.display = "none";
+
+                                    targetDiv.style.display = "none";
+
+                                }
+
+                            }else{
+                                if (targetDiv.style.display == "none") {
+                                    targetDiv.style.display = "block";
+                                    formDiv.style.display = "block";
+                                    info.style.display = "none";
+
+                                    let Table = document.getElementById("tables");
+                                    let data = Object.keys(events[0]);
+                                    generateTableHead(table, data);
+                                    generateTable(table, events);
+                                    targetDiv1.style.display = "none";
+                                   
+                    
+                                }else{
+                                    formDiv.style.display = "block";
+                                    info.style.display = "none";
+
+                                    let Table = document.getElementById("tables");
+                                    let data = Object.keys(events[0]);
+                                    generateTableHead(table, data);
+                                    generateTable(table, events);
+                                    targetDiv1.style.display = "none";
+
+                                }
+
+                            }
+                                
+                                console.log(events)}
+          
+                                
+            });
+
+
+
+    
+</script>
+<script>
+    let amount=[]
+  
+  
+
+    
+    
+    </script>
+
+
+{% endblock %}

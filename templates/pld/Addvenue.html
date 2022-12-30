@@ -1,0 +1,31 @@
+{% extends 'header/mainbase.html' %}
+
+{% block content %}
+<style>
+  .avail{
+    max-width: 50%;
+  }
+  .public{
+    max-width: 50%;
+  }
+</style>
+<div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+  <div class="p-4">
+  <h2 style="font-weight: 800;">ADD VENUE</h2>
+      
+      <br>
+
+      <form action="" method="POST" enctype="multipart/form-data" >
+
+        {% csrf_token%}
+        {{ form.as_p }}
+
+        <input type="submit" value="submit" class="btn btn-success">
+        <button class="btn btn-success" type=""><a href="{% url 'view_venue'%}" style="text-decoration: none; color: white;">Back</a></button>
+
+      </form>
+
+      </div>
+      </div>
+    
+{% endblock %}

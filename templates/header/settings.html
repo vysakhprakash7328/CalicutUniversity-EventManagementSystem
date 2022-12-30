@@ -1,0 +1,159 @@
+{% extends 'header/mainbase.html' %}
+
+{% block content %}
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+  
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+
+<div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-10 col-xl-8 mx-auto">
+        <h2 class="h3 mb-4 page-title">Settings {{users}}</h2>
+        <div class="my-4">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" data-bs-toggle="tab" href="#profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#security">Security</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#notification">Notification</a>
+                </li>
+              </ul>
+            <div class="tab-content">
+            
+
+            <div id="profile" class="container tab-pane active">
+                <div class="">
+                    {% include 'user/viewsingleuser.html' %}
+                </div>
+            </div>
+            <div id="notification" class="container tab-pane fade">
+                <h3>Notifications</h3>
+            </div>
+            <div id="security" class="container tab-pane fade">
+                <h5 class="mb-0 mt-5">Security Settings</h5>
+                <p>These settings are helps you keep your account secure.</p>
+                <div class="list-group mb-5 shadow">
+                    <div class="list-group-item">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <strong class="mb-2">Enable Activity Logs</strong>
+                                <p class="text-muted mb-0">Donec id elit non mi porta gravida at eget metus.</p>
+                            </div>
+                            <div class="col-auto">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="activityLog" checked="">
+                                    <span class="custom-control-label"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <strong class="mb-2">2FA Authentication</strong>
+                                <span class="badge badge-pill badge-success">Enabled</span>
+                                <p class="text-muted mb-0">Maecenas sed diam eget risus varius blandit.</p>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-primary btn-sm">Disable</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <strong class="mb-2">Activate Pin Code</strong>
+                                <p class="text-muted mb-0">Donec id elit non mi porta gravida at eget metus.</p>
+                            </div>
+                            <div class="col-auto">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="pinCode">
+                                    <span class="custom-control-label"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <h5 class="mb-0">Recent Login Activity</h5>
+            <p>Last login activities with your account.</p>
+            <div style="overflow:auto;">
+            <table class="table border bg-white" id="logtable">
+                <thead>
+                    <tr>
+                        <th>Device</th>
+                        <th>Location</th>
+                        <th>IP</th>
+                        <th>Time</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in log %}
+                    <tr>
+                        <th scope="col"><i class="fe fe-globe fe-12 text-muted mr-2"></i>Chrome - Windows 10</th>
+                        <td>Calicut University</td>
+                        <td>{{ip}}</td>
+                        <td>{{i.Date_and_time}}</td>
+                        <td><a hreff="#" class="text-muted"><i class="fe fe-x"></i></a></td>
+                    </tr>
+
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<style type="text/css">
+body{
+margin-top:20px;
+color: #8e9194;
+background-color: #f4f6f9;
+}
+.text-muted {
+    color: #aeb0b4 !important;
+}
+.text-muted {
+    font-weight: 300;
+}
+</style>
+
+<script type="text/javascript">
+
+</script>
+<script>
+    $(document).ready(function (){
+
+      $('#logtable').DataTable();
+
+    });
+
+
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'header/mainbase.html' %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    <script type="text/javascript">
+        function ShowHideDiv() {
+            var selectreport = document.getElementById("selectreport");
+            var dvyear = document.getElementById("dvyear");
+            var dvhall = document.getElementById("dvhall");
+
+            dvyear.style.display = selectreport.value == "Y" ? "block" : "none";
+            dvhall.style.display = selectreport.value == "H" ? "block" : "none";
+
+        }
+    </script>
+    <div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+
+    <center><h3>Generate Pdf report </h3></center>
+
+    <hr />
+    <select id="selectreport" onchange="ShowHideDiv()" class="form-select">
+	  <option value="0">---Select---</option>
+        <option value="H">Hall report</option>
+        <option value="Y">Date report</option>
+    </select>
+    <br>
+    <br>
+    <br>
+    <div id="dvyear" style="display: none">
+        Select Date starting and ending:
+        <form method="post" action="{%  url 'pdf_report' %}">
+            {% csrf_token %}
+        <input type="date" name="yearstart" class="form-control"/>
+        <br>
+        <input type="date" name="yearend" class="form-control"/>
+        <br>
+       <center> <input type="submit" name="yearbtn" class="btn btn-success"></center>
+        </form>
+    
+
+    </div>
+	<div id="dvhall" style="display: none">
+        Select hall
+        <form method="post" action="{% url 'hall_report' %}">
+            {% csrf_token %}
+        <select name="hall" class="form-control">
+            {% for i in hall %}
+
+            <option value="{{i.Hall_id}}">{{i.Hall_name}}</option>
+            {% endfor %}
+            
+        </select>
+        <br>
+        <input type="date" name="datestart" class="form-control"/>
+        <br>
+        <input type="date" name="dateend" class="form-control"/>
+        
+
+        <br>
+        <input type="submit" name="hallbtn" class="btn btn-success">
+    </form>
+    </div>
+    </div>
+
+    {% elif headid %}
+
+    <script type="text/javascript">
+        function ShowHideDiv2() {
+            var selectreport = document.getElementById("selectreports");
+            var dvyear = document.getElementById("dvdep");
+            var dvhall = document.getElementById("dvhall");
+
+            dvyear.style.display = selectreports.value == "Y" ? "block" : "none";
+            dvhall.style.display = selectreports.value == "H" ? "block" : "none";
+
+        }
+    </script>
+    <div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+
+    <center><h3>Generate Pdf report </h3></center>
+
+    <hr />
+    <select id="selectreports" onchange="ShowHideDiv2()" class="form-select">
+	  <option value="0">---Select---</option>
+        <option value="H">Hallwise event report</option>
+        <option value="Y">Departmentwise event report</option>
+    </select>
+    <br>
+    <br>
+    <br>
+    <div id="dvhall" style="display: none">
+        Select Hall and  Date starting and ending:
+        <form method="post" action="{%  url 'pdf_report_dep' %}">
+            {% csrf_token %}
+            <select name="halls" class="form-control">
+                {% for j in hall %}
+                <option value="{{j.Hall_id}}">{{j.Hall_name}}</option>
+                {% endfor %}
+            </select>
+            <br>
+        <input type="date" name="datestart" class="form-control"/>
+        <br>
+        <input type="date" name="dateend" class="form-control"/>
+        <br>
+       <center> <input type="submit" name="hallbtn" class="btn btn-success"></center>
+        </form>
+    
+
+    </div>
+	<div id="dvdep" style="display: none">
+        Select Department
+        <form method="post" action="{% url 'pdf_report_dep' %}">
+            {% csrf_token %}
+        <select name="dep" class="form-control">
+            {% for i in dep %}
+
+            <option value="{{i.department_name}}">{{i.department_name}}</option>
+            {% endfor %}
+            
+        </select>
+        <br>
+        <input type="date" name="datestart" class="form-control"/>
+        <br>
+        <input type="date" name="dateend" class="form-control"/>
+        
+
+        <br>
+        <input type="submit" name="depbtn" class="btn btn-success">
+    </form>
+    </div>
+    </div>
+
+    {% endif %}
+{% endblock %}

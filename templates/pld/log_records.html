@@ -1,0 +1,40 @@
+{% extends 'header/mainbase.html' %}
+{% block content %}
+<div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+    <div class="p-3">
+        <h2 style="font-weight: 800;">Log Records</h2>
+      
+      <hr>
+      <br>
+
+<div style="overflow:auto;">
+
+    <table class="table table-bordered" id="myTable"  data-filter-control="true" data-show-search-clear-button="true">
+        <thead>
+          <tr>
+            <th scope="col">Operation</th>
+            <th scope="col">Person</th>
+            <th scope="col">Person Category</th>
+            <th scope="col">Date & Time</th>
+     
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in log %}
+          <tr>
+            <td>{{i.operation}}</td>
+            <td>{{i.person_name}}</td>
+            <td>{{i.person_category}}</td>
+            <td>{{i.Date_and_time}}</td>
+
+            {% endfor %}
+
+            
+          </tr>
+        </tbody>
+      </table>
+</div>
+</div>
+</div>
+
+{% endblock %}

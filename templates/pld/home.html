@@ -1,0 +1,187 @@
+{% extends 'header/mainbase.html' %}
+
+{% block content %}
+
+<style>
+  .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: none;
+    color: black!important;
+    border-radius: 4px;
+    border: 1px solid #828282;
+  }
+   
+  .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+    background: none;
+    color: black!important;
+  }
+  </style>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+  
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+  
+
+{% if events %}
+  {% if user.is_superuser or mainuserid %}
+  <div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+    <div class="p-3">
+      <h2 style="font-weight: 800;">Event Requests</h2>
+      <hr>
+      <div style="overflow:auto;">
+
+        <table class="table table-striped" id="evrequest">
+            <thead>
+              <tr>
+                <th scope="col">Event ID</th>
+                <th scope="col">Event Name</th>
+                <th scope="col">Event Venue</th>
+                <th scope="col">Details</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in events %}
+                {% for j in eve %}
+                
+                
+                {% if i.Event_id == j.event_id %}
+
+              
+
+             
+              <tr>
+                <th scope="row">{{i.Event_id}}</th>
+                <td>{{i.Event_name}}</td>
+                <td>{{i.Event_venue}}</td>
+                <td><button class="btn btn-success"><a href="{% url 'singlevent' i.Event_id %}" style="text-decoration: none; color: white;">view</a> </button></td>
+                
+                
+              </tr>
+               {% endif %}
+               {% endfor %}
+               {% endfor %}
+               
+               
+               
+            </tbody>
+          </table>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    {% endif %}
+    {% endif %}
+{% if user.is_superuser %}
+{% if dep %}
+
+
+      <div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+        <div class="p-3">
+               
+          <h2 style="font-weight: 800;">Department Requests</h2>
+          <hr>
+          <div style="overflow:auto;">
+
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Department Name</th>
+                    <th scope="col">Department email</th>
+                    
+                    <th scope="col">create user</th>
+                  </tr>
+                </thead>
+                {% for i in dep %}
+                <tbody>
+       
+                  <tr>
+                    <th scope="row">{{i.department_name}}</th>
+                    <td>{{i.head_mail}}</td>
+
+          
+                    
+                    <td><button class="btn btn-success"><a href="{% url 'create_user' i.head_id %}" style="text-decoration: none; color: white;">create</a> </button></td>
+                    
+                  </tr>
+          
+                </tbody>
+                {% endfor %}
+              </table>
+              
+            </div>
+            </div>
+            </div>
+{% endif %}
+
+
+
+
+{% if union %}
+
+
+
+            <div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+              <div class="p-3">
+
+          
+              <h2 style="font-weight: 800;">Union Requests</h2>
+              <hr>
+              <div style="overflow:auto;">
+                <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">Union Name</th>
+                        <th scope="col">President Name</th>
+                        <th scope="col">President phone</th>
+                        <th scope="col">Secretary Name</th>
+                        <th scope="col">Secretary phone</th>
+                        
+                        <th scope="col">create user</th>
+                      </tr>
+                    </thead>
+                    {% for i in union %}
+                    <tbody>
+           
+                      <tr>
+                        <th scope="row">{{i.union_name}}</th>
+                        <td>{{i.president_name}}</td>
+                        <td>{{i.president_phone}}</td>
+                        <td>{{i.secretary_name}}</td>
+                        <td>{{i.secretary_phone}}</td>
+    
+              
+                        
+                        <td><button class="btn btn-success"><a href="{% url 'create_union' i.union_id %}" style="text-decoration: none; color: white;">create</a> </button></td>
+
+                        
+                      </tr>
+              
+                    </tbody>
+                    {% endfor %}
+                  </table>
+                </div>
+                </div>
+            </div>
+            
+            {% endif %}
+            {% endif %}
+         
+           
+
+<script>
+            $(document).ready(function (){
+
+              $('#evrequest').DataTable();
+
+            });
+
+
+
+</script>
+
+{% endblock %}

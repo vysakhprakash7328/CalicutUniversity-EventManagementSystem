@@ -1,0 +1,114 @@
+{% extends 'header/mainbase.html' %}
+
+{% block content %}
+
+<div class="container-fluid shadow p-3 mb-5 bg-white rounded">
+<div class="p-3">
+<select id="type" class="form-select">
+  <option value="0">Events</option>
+  <option value="1">Venues</option>
+  <option value="2">StartDate</option>
+  <option value="3">EndDate</option>
+</select>
+
+<br>
+
+
+
+  <input class="form-control me-2" type="search" placeholder="search by events" aria-label="Search" name="search" id="myInput" onkeyup='tableSearch()'>
+ 
+
+<br>
+<br>
+
+<br>
+
+
+
+
+
+
+
+
+
+
+{% if events %}
+<div style="overflow:auto;">
+
+        <table class="table table-bordered" id="myTable"  data-filter-control="true" data-show-search-clear-button="true">
+            <thead>
+              <tr>
+                <th scope="col">Event Name</th>
+                <th scope="col">Event Venue</th>
+                <th scope="col">Event Start Date</th>
+                <th scope="col">Event End Date</th>
+                <th scope="col">Details</th>
+         
+              </tr>
+            </thead>
+            <tbody>
+                {% for i in events %}
+              <tr>
+                <td>{{i.Event_name}}</td>
+                <td>{{i.Event_venue}}</td>
+                <td>{{i.Event_startDate}}</td>
+                <td>{{i.Event_endDate}}</td>
+                <td><button class="btn btn-success"><a href="{% url 'Event_brochure' i.Event_id %}" style="text-decoration: none; color: white;">view</a> </button></td>
+                {% if user.is_authenticated %}
+                    {% if user == i.Event_manager %}
+                       <td><button class="btn btn-success"><a href="{% url 'edit_event' i.Event_id %}" style="text-decoration: none; color: white;">Edit</a> </button></td>
+                    {% elif user == Null %}
+                        <td style="color: rgba(214, 29, 16, 0.932);">Can't Edit..</td>
+
+                     {% endif %}
+                {% endif %}
+
+
+                
+                {% endfor %}
+
+                
+              </tr>
+            </tbody>
+          </table>
+</div>
+          {% else %}
+
+          <h3>No Events to Display...</h3>
+        
+          {% endif %}
+
+      </div>
+    </div>
+  </div>
+
+ 
+      
+      <script type="application/javascript">
+        function tableSearch() {
+            let input, filter, table, tr, td, txtValue;
+
+            //Intialising Variables
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            type = document.getElementById("type")
+
+            for (let i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[type.value];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+
+        }
+    </script>
+      
+ 
+{% endblock %}
